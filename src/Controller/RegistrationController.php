@@ -26,7 +26,8 @@ class RegistrationController extends Controller {
             $user->setPassword($password);
             //on active par défaut
             $user->setIsActive(true);
-            //$user->addRole("ROLE_ADMIN");
+            //On remplit la date d'inscription avec la date et l'heure actuelle
+            $user->setRegistrationDate(new \DateTime());
             // 4) save the User!
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
