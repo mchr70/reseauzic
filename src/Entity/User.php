@@ -70,12 +70,7 @@ class User implements UserInterface, \Serializable {
     private $gender;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $country;
-
-    /**
-     * @ORM\Column(type="string", length=64, nullable=true)
+     * @ORM\Column(type="string", length=64)
      */
     private $zipCode;
 
@@ -139,6 +134,11 @@ class User implements UserInterface, \Serializable {
      */
     private $receivedRatings;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\UserInstrumentLevel", mappedBy="user")
+     */
+    private $userInstrumentLevels;
+
     public function __construct() {
         $this->isActive = true;
         $this->genres = new ArrayCollection();
@@ -149,6 +149,7 @@ class User implements UserInterface, \Serializable {
         $this->receivedRatings = new ArrayCollection();
         $this->instruments = new ArrayCollection();
         $this->instrumentalLevel = new ArrayCollection();
+        $this->userInstrumentLevels = new ArrayCollection();
         // may not be needed, see section on salt below
         // $this->salt = md5(uniqid('', true));
     }
@@ -274,18 +275,6 @@ class User implements UserInterface, \Serializable {
     public function setGender(bool $gender): self
     {
         $this->gender = $gender;
-
-        return $this;
-    }
-
-    public function getCountry(): ?string
-    {
-        return $this->country;
-    }
-
-    public function setCountry(string $country): self
-    {
-        $this->country = $country;
 
         return $this;
     }
@@ -549,6 +538,37 @@ class User implements UserInterface, \Serializable {
             // set the owning side to null (unless already changed)
             if ($receivedRating->getUserRecipient() === $this) {
                 $receivedRating->setUserRecipient(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|UserInstrumentLevel[]
+     */
+    public function getUserInstrumentLevels(): Collection
+    {
+        return $this->userInstrumentLevels;
+    }
+
+    public function addUserInstrumentLevel(UserInstrumentLevel $userInstrumentLevel): self
+    {
+        if (!$this->userInstrumentLevels->contains($userInstrumentLevel)) {
+            $this->userInstrumentLevels[] = $userInstrumentLevel;
+            $userInstrumentLevel->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUserInstrumentLevel(UserInstrumentLevel $userInstrumentLevel): self
+    {
+        if ($this->userInstrumentLevels->contains($userInstrumentLevel)) {
+            $this->userInstrumentLevels->removeElement($userInstrumentLevel);
+            // set the owning side to null (unless already changed)
+            if ($userInstrumentLevel->getUser() === $this) {
+                $userInstrumentLevel->setUser(null);
             }
         }
 

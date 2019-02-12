@@ -35,7 +35,7 @@ class Message
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="sentMessages")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $user;
+    private $userSender;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="receivedMessages")

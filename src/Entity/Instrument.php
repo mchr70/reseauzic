@@ -23,10 +23,16 @@ class Instrument
      */
     private $name;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\UserInstrumentLevel", mappedBy="instrument")
+     */
+    private $userInstrumentLevel;
+
     public function __construct()
     {
         $this->users = new ArrayCollection();
         $this->levelByUsers = new ArrayCollection();
+        $this->userInstrumentLevel = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -42,6 +48,37 @@ class Instrument
     public function setName(string $name): self
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|UserInstrumentLevel[]
+     */
+    public function getUserInstrumentLevel(): Collection
+    {
+        return $this->userInstrumentLevel;
+    }
+
+    public function addUserInstrumentLevel(UserInstrumentLevel $userInstrumentLevel): self
+    {
+        if (!$this->userInstrumentLevel->contains($userInstrumentLevel)) {
+            $this->userInstrumentLevel[] = $userInstrumentLevel;
+            $userInstrumentLevel->setInstrument($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUserInstrumentLevel(UserInstrumentLevel $userInstrumentLevel): self
+    {
+        if ($this->userInstrumentLevel->contains($userInstrumentLevel)) {
+            $this->userInstrumentLevel->removeElement($userInstrumentLevel);
+            // set the owning side to null (unless already changed)
+            if ($userInstrumentLevel->getInstrument() === $this) {
+                $userInstrumentLevel->setInstrument(null);
+            }
+        }
 
         return $this;
     }
