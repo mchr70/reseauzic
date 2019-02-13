@@ -12,6 +12,7 @@
     {% else %}
         <p>Sexe : femme</p>
     {% endif %}
+{#}
     <p>Code postal: {{ app.user.zipCode }}</p>
     <p>Ville: {{ app.user.city }}</p>
     <p>Adresse: {{ app.user.address }}</p>
@@ -26,5 +27,7 @@
     <p>Instruments pratiqués: </p>
     {% for uil in app.user.userInstrumentLevels %}
          <li>{{ uil.instrument.name }}, niveau {{ uil.level.name }}</li>
-    {% endfor %}
+    {% endfor %} #}
+
+    {{ form(form)  }}
 {% endblock %}
