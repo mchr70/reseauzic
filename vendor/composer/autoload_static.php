@@ -514,6 +514,13 @@ class ComposerStaticInit4db24a5dc9bdf20032697abb3bbdd267
                 0 => __DIR__ . '/..' . '/ocramius/proxy-manager/src',
             ),
         ),
+        'G' => 
+        array (
+            'Guzzlefry\\Twig' => 
+            array (
+                0 => __DIR__ . '/..' . '/guzzlefry/twig-age-extension/src',
+            ),
+        ),
         'D' => 
         array (
             'Doctrine\\Common\\Lexer\\' => 

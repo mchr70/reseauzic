@@ -424,10 +424,6 @@
       <tag name="doctrine.repository_service"/>
       <argument type="service" id="doctrine"/>
     </service>
-    <service id="App\Repository\InstrumentallevelbyuserRepository" class="App\Repository\InstrumentallevelbyuserRepository" autowire="true" autoconfigure="true">
-      <tag name="doctrine.repository_service"/>
-      <argument type="service" id="doctrine"/>
-    </service>
     <service id="App\Repository\LevelRepository" class="App\Repository\LevelRepository" autowire="true" autoconfigure="true">
       <tag name="doctrine.repository_service"/>
       <argument type="service" id="doctrine"/>
@@ -451,6 +447,9 @@
     <service id="App\Repository\UserInstrumentLevelRepository" class="App\Repository\UserInstrumentLevelRepository" autowire="true" autoconfigure="true">
       <tag name="doctrine.repository_service"/>
       <argument type="service" id="doctrine"/>
+    </service>
+    <service id="twig.extension.date" class="Guzzlefry\Twig\AgeExtension" autowire="true" autoconfigure="true">
+      <tag name="twig.extension"/>
     </service>
     <service id="controller_name_converter" class="Symfony\Bundle\FrameworkBundle\Controller\ControllerNameParser" public="false">
       <tag name="monolog.logger" channel="request"/>
@@ -2768,7 +2767,7 @@
       <factory class="Doctrine\ORM\EntityManager" method="create"/>
     </service>
     <service id="doctrine.orm.container_repository_factory" class="Doctrine\Bundle\DoctrineBundle\Repository\ContainerRepositoryFactory" public="false">
-      <argument type="service" id=".service_locator.1iLR1gW"/>
+      <argument type="service" id=".service_locator.cQsRBMa"/>
     </service>
     <service id="doctrine.orm.manager_configurator.abstract" class="Doctrine\Bundle\DoctrineBundle\ManagerConfigurator" abstract="true">
       <argument type="collection"/>
@@ -3856,6 +3855,9 @@
         <argument type="service" id="twig.extension.dump"/>
       </call>
       <call method="addExtension">
+        <argument type="service" id="twig.extension.date"/>
+      </call>
+      <call method="addExtension">
         <argument type="service" id="doctrine.twig.doctrine_extension"/>
       </call>
       <call method="addExtension">
@@ -4466,8 +4468,6 @@
     <service id=".abstract.instanceof.App\Repository\GenreRepository" class="App\Repository\GenreRepository" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepositoryInterface.0.App\Repository\InstrumentRepository" class="App\Repository\InstrumentRepository" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Repository\InstrumentRepository" class="App\Repository\InstrumentRepository" autowire="true" autoconfigure="true" abstract="true"/>
-    <service id=".instanceof.Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepositoryInterface.0.App\Repository\InstrumentallevelbyuserRepository" class="App\Repository\InstrumentallevelbyuserRepository" autowire="true" abstract="true"/>
-    <service id=".abstract.instanceof.App\Repository\InstrumentallevelbyuserRepository" class="App\Repository\InstrumentallevelbyuserRepository" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepositoryInterface.0.App\Repository\LevelRepository" class="App\Repository\LevelRepository" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Repository\LevelRepository" class="App\Repository\LevelRepository" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepositoryInterface.0.App\Repository\MessageRepository" class="App\Repository\MessageRepository" autowire="true" abstract="true"/>
@@ -4480,6 +4480,9 @@
     <service id=".abstract.instanceof.App\Repository\ThreadRepository" class="App\Repository\ThreadRepository" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepositoryInterface.0.App\Repository\UserInstrumentLevelRepository" class="App\Repository\UserInstrumentLevelRepository" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Repository\UserInstrumentLevelRepository" class="App\Repository\UserInstrumentLevelRepository" autowire="true" autoconfigure="true" abstract="true"/>
+    <service id=".instanceof.Twig_ExtensionInterface.0.twig.extension.date" class="Guzzlefry\Twig\AgeExtension" autowire="true" abstract="true"/>
+    <service id=".instanceof.Twig\Extension\ExtensionInterface.0.twig.extension.date" class="Guzzlefry\Twig\AgeExtension" autowire="true" abstract="true"/>
+    <service id=".abstract.instanceof.twig.extension.date" class="Guzzlefry\Twig\AgeExtension" autowire="true" autoconfigure="true" abstract="true"/>
     <service id="maker.auto_command.make_auth" class="Symfony\Bundle\MakerBundle\Command\MakerCommand" public="false">
       <tag name="console.command" command="make:auth"/>
       <argument type="service" id="maker.maker.make_authenticator"/>
@@ -4735,12 +4738,11 @@
         <argument key="doctrine.orm.default_listeners.attach_entity_listeners" type="service" id="doctrine.orm.default_listeners.attach_entity_listeners"/>
       </argument>
     </service>
-    <service id=".service_locator.1iLR1gW" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
+    <service id=".service_locator.cQsRBMa" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
       <tag name="container.service_locator"/>
       <argument type="collection">
         <argument key="App\Repository\GenreRepository" type="service" id="App\Repository\GenreRepository"/>
         <argument key="App\Repository\InstrumentRepository" type="service" id="App\Repository\InstrumentRepository"/>
-        <argument key="App\Repository\InstrumentallevelbyuserRepository" type="service" id="App\Repository\InstrumentallevelbyuserRepository"/>
         <argument key="App\Repository\LevelRepository" type="service" id="App\Repository\LevelRepository"/>
         <argument key="App\Repository\MessageRepository" type="service" id="App\Repository\MessageRepository"/>
         <argument key="App\Repository\PhotoRepository" type="service" id="App\Repository\PhotoRepository"/>
