@@ -451,6 +451,10 @@
       <tag name="doctrine.repository_service"/>
       <argument type="service" id="doctrine"/>
     </service>
+    <service id="App\Repository\UserRepository" class="App\Repository\UserRepository" autowire="true" autoconfigure="true">
+      <tag name="doctrine.repository_service"/>
+      <argument type="service" id="doctrine"/>
+    </service>
     <service id="twig.extension.date" class="Guzzlefry\Twig\AgeExtension" autowire="true" autoconfigure="true">
       <tag name="twig.extension"/>
     </service>
@@ -2771,7 +2775,7 @@
       <factory class="Doctrine\ORM\EntityManager" method="create"/>
     </service>
     <service id="doctrine.orm.container_repository_factory" class="Doctrine\Bundle\DoctrineBundle\Repository\ContainerRepositoryFactory" public="false">
-      <argument type="service" id=".service_locator.cQsRBMa"/>
+      <argument type="service" id=".service_locator.YJCc3SA"/>
     </service>
     <service id="doctrine.orm.manager_configurator.abstract" class="Doctrine\Bundle\DoctrineBundle\ManagerConfigurator" abstract="true">
       <argument type="collection"/>
@@ -4486,6 +4490,8 @@
     <service id=".abstract.instanceof.App\Repository\ThreadRepository" class="App\Repository\ThreadRepository" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepositoryInterface.0.App\Repository\UserInstrumentLevelRepository" class="App\Repository\UserInstrumentLevelRepository" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Repository\UserInstrumentLevelRepository" class="App\Repository\UserInstrumentLevelRepository" autowire="true" autoconfigure="true" abstract="true"/>
+    <service id=".instanceof.Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepositoryInterface.0.App\Repository\UserRepository" class="App\Repository\UserRepository" autowire="true" abstract="true"/>
+    <service id=".abstract.instanceof.App\Repository\UserRepository" class="App\Repository\UserRepository" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Twig_ExtensionInterface.0.twig.extension.date" class="Guzzlefry\Twig\AgeExtension" autowire="true" abstract="true"/>
     <service id=".instanceof.Twig\Extension\ExtensionInterface.0.twig.extension.date" class="Guzzlefry\Twig\AgeExtension" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.twig.extension.date" class="Guzzlefry\Twig\AgeExtension" autowire="true" autoconfigure="true" abstract="true"/>
@@ -4745,7 +4751,7 @@
         <argument key="doctrine.orm.default_listeners.attach_entity_listeners" type="service" id="doctrine.orm.default_listeners.attach_entity_listeners"/>
       </argument>
     </service>
-    <service id=".service_locator.cQsRBMa" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
+    <service id=".service_locator.YJCc3SA" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
       <tag name="container.service_locator"/>
       <argument type="collection">
         <argument key="App\Repository\GenreRepository" type="service" id="App\Repository\GenreRepository"/>
@@ -4756,6 +4762,7 @@
         <argument key="App\Repository\RatingRepository" type="service" id="App\Repository\RatingRepository"/>
         <argument key="App\Repository\ThreadRepository" type="service" id="App\Repository\ThreadRepository"/>
         <argument key="App\Repository\UserInstrumentLevelRepository" type="service" id="App\Repository\UserInstrumentLevelRepository"/>
+        <argument key="App\Repository\UserRepository" type="service" id="App\Repository\UserRepository"/>
       </argument>
     </service>
     <service id="debug.security.voter.security.access.authenticated_voter" class="Symfony\Component\Security\Core\Authorization\Voter\TraceableVoter">

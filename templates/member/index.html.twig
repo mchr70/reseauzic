@@ -4,14 +4,6 @@
 
 {% block body %}
     <h3>Votre profil</h3>
-    <p>Mail: {{ app.user.email}}</p>
-    <p>Âge: {{ app.user.birthDate | age }} ans</p>
-    <p>Date d'inscription: {{ app.user.registrationDate|date("d/m/Y")}}</p>
-    {% if app.user.gender == 1 %}
-        <p>Sexe : homme</p>
-    {% else %}
-        <p>Sexe : femme</p>
-    {% endif %}
 {#}
     <p>Code postal: {{ app.user.zipCode }}</p>
     <p>Ville: {{ app.user.city }}</p>
