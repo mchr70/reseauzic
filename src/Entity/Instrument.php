@@ -24,17 +24,17 @@ class Instrument
     private $name;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\UserInstrumentLevel", mappedBy="instrument")
+     * @ORM\OneToMany(targetEntity="App\Entity\UserInstrument", mappedBy="instrument")
      */
-    private $userInstrumentLevel;
+    private $userInstruments;
 
     public function __construct()
     {
         $this->users = new ArrayCollection();
         $this->levelByUsers = new ArrayCollection();
-        $this->userInstrumentLevel = new ArrayCollection();
+        $this->userInstruments = new ArrayCollection();
+        
     }
-
     public function getId(): ?int
     {
         return $this->id;
@@ -53,34 +53,34 @@ class Instrument
     }
 
     /**
-     * @return Collection|UserInstrumentLevel[]
+     * @return Collection|UserInstrument[]
      */
-    public function getUserInstrumentLevel(): Collection
+    public function getUserInstruments(): Collection
     {
-        return $this->userInstrumentLevel;
+        return $this->userInstruments;
     }
 
-    public function addUserInstrumentLevel(UserInstrumentLevel $userInstrumentLevel): self
+    public function addUserInstrument(UserInstrument $userInstrument): self
     {
-        if (!$this->userInstrumentLevel->contains($userInstrumentLevel)) {
-            $this->userInstrumentLevel[] = $userInstrumentLevel;
-            $userInstrumentLevel->setInstrument($this);
+        if (!$this->userInstruments->contains($userInstrument)) {
+            $this->userInstruments[] = $userInstrument;
+            $userInstrument->setInstrument($this);
         }
 
         return $this;
     }
 
-    public function removeUserInstrumentLevel(UserInstrumentLevel $userInstrumentLevel): self
+    public function removeUserInstrument(UserInstrument $userInstrument): self
     {
-        if ($this->userInstrumentLevel->contains($userInstrumentLevel)) {
-            $this->userInstrumentLevel->removeElement($userInstrumentLevel);
+        if ($this->userInstruments->contains($userInstrument)) {
+            $this->userInstruments->removeElement($userInstrument);
             // set the owning side to null (unless already changed)
-            if ($userInstrumentLevel->getInstrument() === $this) {
-                $userInstrumentLevel->setInstrument(null);
+            if ($userInstrument->getInstrument() === $this) {
+                $userInstrument->setInstrument(null);
             }
         }
 
         return $this;
-    }
+    }  
 
 }

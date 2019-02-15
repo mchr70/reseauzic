@@ -125,4 +125,16 @@ class Message
 
         return $this;
     }
+
+    public function getUserSender(): ?User
+    {
+        return $this->userSender;
+    }
+
+    public function setUserSender(?User $userSender): self
+    {
+        $this->userSender = $userSender;
+
+        return $this;
+    }
 }

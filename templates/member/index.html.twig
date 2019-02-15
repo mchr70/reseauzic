@@ -4,6 +4,7 @@
 
 {% block body %}
     <h3>Votre profil</h3>
+    {{ form(form) }}
 {#}
     <p>Code postal: {{ app.user.zipCode }}</p>
     <p>Ville: {{ app.user.city }}</p>
@@ -20,6 +21,4 @@
     {% for uil in app.user.userInstrumentLevels %}
          <li>{{ uil.instrument.name }}, niveau {{ uil.level.name }}</li>
     {% endfor %} #}
-
-    {{ form(form)  }}
 {% endblock %}

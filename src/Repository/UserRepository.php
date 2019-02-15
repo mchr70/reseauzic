@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Instrument;
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
@@ -22,15 +23,40 @@ class UserRepository extends ServiceEntityRepository
     // /**
     //  * @return Userl[] Returns an array of User objects
     //  */
-    
-    public function findAll()
+
+    public function findAllInstruments(): array
     {
-        return $this->createQueryBuilder('u')
-            ->orderBy('u.registrationDate', 'DESC')
-            ->setMaxResults(1)
-            ->getQuery()
-            ->getResult()
-        ;
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery(
+            'SELECT i
+            FROM App\Entity\Instrument i'
+        );
+
+        // returns an array of Instrument objects
+        return $query->execute();
+    }
+
+    public function findById($id) {
+        $qb = $this->entityManager->createQueryBuilder();
+        $qb ->select('u')
+            ->from('App\Entity\User', 'u')
+            ->setParameter('id', $id);
+    
+        return $qb->getQuery()->getResult();
+    }
+
+    public function findAllOrdererByRegDate(): array
+    {
+        $qb = $this->entityManager->createQueryBuilder();
+        $qb ->select('u')
+            ->from('App\Entity\User', 'u')
+            ->orderBy('registrationDate');
+    
+        return $qb->getQuery()->getResult();
+
+        // to get just one result:
+        // $product = $qb->setMaxResults(1)->getOneOrNullResult();
     }
 
     /*

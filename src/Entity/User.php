@@ -108,10 +108,11 @@ class User implements UserInterface, \Serializable {
      * @ORM\OneToMany(targetEntity="App\Entity\Rating", mappedBy="userRecipient")
      */
     private $receivedRatings;
+
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\UserInstrumentLevel", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="App\Entity\UserInstrument", mappedBy="user")
      */
-    private $userInstrumentLevels;
+    private $userInstruments;
     
     public function __construct() {
         $this->isActive = true;
@@ -121,9 +122,8 @@ class User implements UserInterface, \Serializable {
         $this->receivedMessages = new ArrayCollection();
         $this->givenRatings = new ArrayCollection();
         $this->receivedRatings = new ArrayCollection();
-        $this->instruments = new ArrayCollection();
-        $this->instrumentalLevel = new ArrayCollection();
-        $this->userInstrumentLevels = new ArrayCollection();
+        $this->userInstruments = new ArrayCollection();
+        
         // may not be needed, see section on salt below
         // $this->salt = md5(uniqid('', true));
     }
@@ -440,30 +440,43 @@ class User implements UserInterface, \Serializable {
         }
         return $this;
     }
-    /**
-     * @return Collection|UserInstrumentLevel[]
-     */
-    public function getUserInstrumentLevels(): Collection
+
+    public function setRoles(array $roles): self
     {
-        return $this->userInstrumentLevels;
-    }
-    public function addUserInstrumentLevel(UserInstrumentLevel $userInstrumentLevel): self
-    {
-        if (!$this->userInstrumentLevels->contains($userInstrumentLevel)) {
-            $this->userInstrumentLevels[] = $userInstrumentLevel;
-            $userInstrumentLevel->setUser($this);
-        }
+        $this->roles = $roles;
+
         return $this;
     }
-    public function removeUserInstrumentLevel(UserInstrumentLevel $userInstrumentLevel): self
+
+    /**
+     * @return Collection|UserInstrument[]
+     */
+    public function getUserInstruments(): Collection
     {
-        if ($this->userInstrumentLevels->contains($userInstrumentLevel)) {
-            $this->userInstrumentLevels->removeElement($userInstrumentLevel);
+        return $this->userInstruments;
+    }
+
+    public function addUserInstrument(UserInstrument $userInstrument): self
+    {
+        if (!$this->userInstruments->contains($userInstrument)) {
+            $this->userInstruments[] = $userInstrument;
+            $userInstrument->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUserInstrument(UserInstrument $userInstrument): self
+    {
+        if ($this->userInstruments->contains($userInstrument)) {
+            $this->userInstruments->removeElement($userInstrument);
             // set the owning side to null (unless already changed)
-            if ($userInstrumentLevel->getUser() === $this) {
-                $userInstrumentLevel->setUser(null);
+            if ($userInstrument->getUser() === $this) {
+                $userInstrument->setUser(null);
             }
         }
+
         return $this;
     }
+   
 }

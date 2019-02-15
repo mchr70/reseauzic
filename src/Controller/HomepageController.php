@@ -12,13 +12,9 @@ class HomepageController extends Controller {
      * @Route("/")
      */
     public function index() {
-        $recentUsers = $this->getDoctrine()
-        ->getRepository(User::class)
-        ->findAll();
 
         return $this->render('homepage/index.html.twig', ['mainNavHome'=>true, 
-                                                          'title'=>'Accueil',
-                                                          'recentUsers' => $recentUsers
+                                                          'title'=>'Accueil'
         ]);
     }
 

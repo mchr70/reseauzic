@@ -48,16 +48,5 @@ class InstrumentRepository extends ServiceEntityRepository
     }
     */
 
-    public function findAll(): array
-    {
-        $entityManager = $this->getEntityManager();
-
-        $query = $entityManager->createQuery(
-            'SELECT i
-            FROM App\Entity\Instrument i'
-        );
-
-        // returns an array of Instrument objects
-        return $query->execute();
-    }
+   
 }
