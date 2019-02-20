@@ -1,10 +1,10 @@
 <?php
 
 namespace App\Entity;
-
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\OrderBy;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\InstrumentRepository")
@@ -27,6 +27,11 @@ class Instrument
      * @ORM\OneToMany(targetEntity="App\Entity\UserInstrument", mappedBy="instrument")
      */
     private $userInstruments;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\User", mappedBy="instruments")
+     */
+    private $users;
 
     public function __construct()
     {
@@ -78,6 +83,34 @@ class Instrument
             if ($userInstrument->getInstrument() === $this) {
                 $userInstrument->setInstrument(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|User[]
+     */
+    public function getUsers(): Collection
+    {
+        return $this->users;
+    }
+
+    public function addUser(User $user): self
+    {
+        if (!$this->users->contains($user)) {
+            $this->users[] = $user;
+            $user->addInstrument($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUser(User $user): self
+    {
+        if ($this->users->contains($user)) {
+            $this->users->removeElement($user);
+            $user->removeInstrument($this);
         }
 
         return $this;

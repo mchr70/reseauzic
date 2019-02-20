@@ -3,19 +3,21 @@
 namespace App\Form;
 
 use App\Entity\User;
-use App\Entity\Instrument;
 use App\Entity\Genre;
+use App\Entity\Instrument;
 use App\Entity\UserInstrument;
+use App\Repository\GenreRepository;
+use App\Repository\InstrumentRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 class MemberType extends AbstractType
 {
@@ -30,6 +32,7 @@ class MemberType extends AbstractType
                                                     'Homme' => 1,
                                                     'Femme' => 0,
                                                 ],
+                                                'expanded' => true
             ])
             ->add('zipCode', TextType::Class, ['label' => 'Code postal', 
                                                'required' => false])
@@ -40,17 +43,25 @@ class MemberType extends AbstractType
             ->add('phone', TextType::Class, ['label' => 'Téléphone',
                                              'required' => false])
             ->add('about', TextareaType::Class, ['label' => 'Description',
-                                                 'required' => false])   
-            ->add('influences', TextareaType::Class, ['label' => 'Influences',
-                                                      'required' => false])
-            ->add('material', TextareaType::Class, ['label' => 'Matériel',
-                                                    'required' => false])
+                                                 'required' => false])  
+            ->add('instruments', EntityType::Class, array(
+                    'class' => Instrument::Class,
+                    'choice_label' => 'name',
+                    'label' => 'Instruments pratiqués',
+                    'expanded' => true,
+                    'multiple' => true,
+                    'query_builder'=>function(InstrumentRepository $ir){
+                        return $ir ->createQueryBuilder('i')->orderBy('i.name','ASC');}
+                ) 
+            )                                                                              
             ->add('genres', EntityType::Class, array(
                     'class' => Genre::Class,
                     'choice_label' => 'name',
                     'label' => 'Genres de musique pratiqués',
                     'expanded' => true,
-                    'multiple' => true
+                    'multiple' => true,
+                    'query_builder'=>function(GenreRepository $gr){
+                        return $gr ->createQueryBuilder('g')->orderBy('g.name','ASC');}
                 ) 
             )
             ->add('submit', SubmitType::class, ['label' => 'Sauvegarder les modifications'])

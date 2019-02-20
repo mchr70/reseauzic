@@ -1,12 +1,14 @@
 <?php
 namespace App\Entity;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Security\Core\User\UserInterface;
+use Doctrine\ORM\Mapping\OrderBy;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 /**
+ * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @ORM\Table(name="user")
  * @UniqueEntity(fields="email")
  * @ORM\Entity()
@@ -110,9 +112,10 @@ class User implements UserInterface, \Serializable {
     private $receivedRatings;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\UserInstrument", mappedBy="user")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Instrument", inversedBy="users")
+     * @OrderBy({"name" = "ASC"})
      */
-    private $userInstruments;
+    private $instruments;
     
     public function __construct() {
         $this->isActive = true;
@@ -123,6 +126,7 @@ class User implements UserInterface, \Serializable {
         $this->givenRatings = new ArrayCollection();
         $this->receivedRatings = new ArrayCollection();
         $this->userInstruments = new ArrayCollection();
+        $this->instruments = new ArrayCollection();
         
         // may not be needed, see section on salt below
         // $this->salt = md5(uniqid('', true));
@@ -449,31 +453,26 @@ class User implements UserInterface, \Serializable {
     }
 
     /**
-     * @return Collection|UserInstrument[]
+     * @return Collection|Instrument[]
      */
-    public function getUserInstruments(): Collection
+    public function getInstruments(): Collection
     {
-        return $this->userInstruments;
+        return $this->instruments;
     }
 
-    public function addUserInstrument(UserInstrument $userInstrument): self
+    public function addInstrument(Instrument $instrument): self
     {
-        if (!$this->userInstruments->contains($userInstrument)) {
-            $this->userInstruments[] = $userInstrument;
-            $userInstrument->setUser($this);
+        if (!$this->instruments->contains($instrument)) {
+            $this->instruments[] = $instrument;
         }
 
         return $this;
     }
 
-    public function removeUserInstrument(UserInstrument $userInstrument): self
+    public function removeInstrument(Instrument $instrument): self
     {
-        if ($this->userInstruments->contains($userInstrument)) {
-            $this->userInstruments->removeElement($userInstrument);
-            // set the owning side to null (unless already changed)
-            if ($userInstrument->getUser() === $this) {
-                $userInstrument->setUser(null);
-            }
+        if ($this->instruments->contains($instrument)) {
+            $this->instruments->removeElement($instrument);
         }
 
         return $this;
