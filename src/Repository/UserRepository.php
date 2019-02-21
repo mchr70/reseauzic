@@ -2,10 +2,11 @@
 
 namespace App\Repository;
 
-use App\Entity\Instrument;
 use App\Entity\User;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use App\Entity\Instrument;
+use App\Entity\UserSearch;
 use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 
 /**
@@ -18,7 +19,7 @@ class UserRepository extends ServiceEntityRepository
 {
     public function __construct(RegistryInterface $registry)
     {
-        parent::__construct($registry, Level::class);
+        parent::__construct($registry, User::class);
     }
 
     public function findById($id) {
@@ -28,6 +29,25 @@ class UserRepository extends ServiceEntityRepository
             ->setParameter('id', $id); 
     
         return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * @return query
+     */
+    public function findAllVisibleQuery(UserSearch $search){
+        $query =  $this->findVisibleQuery();
+
+        if($search->getZipCode){
+            $query->$query->where('u.zipCode == :zipCode')
+                          ->setParameter('zipCode', $search->getZipCode());
+        }
+
+        if($search->getCity){
+            $query->$query->where('u.city == :city')
+                          ->setParameter('city', $search->getCity());
+        }
+
+        return $query->getQuery();
     }
 
 

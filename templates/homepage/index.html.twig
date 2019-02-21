@@ -7,4 +7,12 @@
     {% for user in users%}
         <li>{{ user.email }}</li>
     {% endfor %}
+
+    <div class="jumbotron">
+        {{ form_start(form) }}
+        {{ form_row(form.zipCode) }}
+        {{ form_row(form.city) }}
+        <button class="btn btn-primary">Rechercher</button>
+        {{ form_end(form) }}
+    </div>
 {% endblock %}
