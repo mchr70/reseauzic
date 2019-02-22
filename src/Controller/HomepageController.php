@@ -24,27 +24,36 @@ class HomepageController extends Controller {
                                         ->setMaxResults(3)
                                         ->getResult();
 
+
+        return $this->render('homepage/index.html.twig', ['mainNavHome'=>true, 
+                                                          'title'=>'Accueil',
+                                                          'users' => $users
+        ]);
+    }
+
+    /**
+     * @Route("/search", name="member_search")
+     */
+    public function searchMember(ObjectManager $manager, Request $request){
+
         $search = new UserSearch();
         $form = $this->createForm(UserSearchType::class, $search);
         $form->handleRequest($request);
 
+        $search = $form->getData();
+
         $selUsers =  $manager->createQuery('SELECT u 
                                             FROM App\Entity\User u 
-                                            WHERE u.zipCode = :zipCode
-                                            OR u.city = :city'
-                                          )
-                                    ->setParameter('zipCode', $search->getZipCode())
-                                    ->setParameter('city', $search->getCity())
-                                    ->getResult();
+                                            WHERE u.zipCode = :zipCode')
+                                            ->setParameter('zipCode', $search->getZipCode())
+                                            ->getResult();
 
         dump($selUsers);
 
-        return $this->render('homepage/index.html.twig', ['mainNavHome'=>true, 
-                                                          'title'=>'Accueil',
-                                                          'users' => $users,
+        return $this->render('homepage/search.html.twig', ['mainNavHome'=>true, 
+                                                          'title'=>'Rechercher des membres',
                                                           'selUsers' => $selUsers,
                                                           'form' => $form->createView()
         ]);
     }
-
 }

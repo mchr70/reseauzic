@@ -33,6 +33,9 @@
                     <li class="nav-item {% if mainNavHome is defined %}active{% endif %}">
                         <a class="nav-link" href="{{path('app_homepage_index')}}">Accueil</a>
                     </li>
+                    <li class="nav-item {% if mainNavHome is defined %}active{% endif %}">
+                        <a class="nav-link" href="{{path('member_search')}}">Recherche</a>
+                    </li>
                     {% if is_granted('ROLE_USER') %}
                         <li class="nav-item {% if mainNavMember is defined %}active{% endif %}">
                             <a class="nav-link" href="{{path('app_member_index')}}">Espace membre</a>
