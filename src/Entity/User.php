@@ -7,11 +7,12 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+
 /**
- * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @ORM\Table(name="user")
- * @UniqueEntity(fields="email")
  * @ORM\Entity()
+ * @UniqueEntity(fields="email")
+ * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  */
 class User implements UserInterface, \Serializable {
     /**
@@ -125,7 +126,6 @@ class User implements UserInterface, \Serializable {
         $this->receivedMessages = new ArrayCollection();
         $this->givenRatings = new ArrayCollection();
         $this->receivedRatings = new ArrayCollection();
-        $this->userInstruments = new ArrayCollection();
         $this->instruments = new ArrayCollection();
         
         // may not be needed, see section on salt below

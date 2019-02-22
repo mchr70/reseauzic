@@ -42,7 +42,7 @@ class UserSearchType extends AbstractType
                  'class' => Genre::Class,
                  'choice_label' => 'name',
                  'label' => 'Genres de musique pratiqués',
-                'expanded' => true,
+                 'expanded' => true,
                  'multiple' => true,
                  'mapped' => false,
                  'query_builder'=>function(GenreRepository $gr){
@@ -50,7 +50,9 @@ class UserSearchType extends AbstractType
                  )
             )
             
-            ->add('submit', SubmitType::class)
+            ->add('submit', SubmitType::class, [
+                    'label' => 'Rechercher'           
+            ])
         ;
     }
 

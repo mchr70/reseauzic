@@ -39,17 +39,19 @@ class HomepageController extends Controller {
         $search = new UserSearch();
         $form = $this->createForm(UserSearchType::class, $search);
         $form->handleRequest($request);
+        // if ($form->isSubmitted() && $form->isValid()) {
+        //     $selUsers = $manager->getRepository(User::class)->findSearchedUsers($search->getZipCode(), $search->getInstruments());
+        //     dump($selUsers[0]->getInstruments()[1]);
+        // }
 
-        $search = $form->getData();
-
-        $selUsers =  $manager->createQuery('SELECT u 
-                                            FROM App\Entity\User u 
-                                            WHERE u.zipCode = :zipCode')
-                                            ->setParameter('zipCode', $search->getZipCode())
-                                            ->getResult();
-
-        dump($selUsers);
-
+        if ($form->isSubmitted() && $form->isValid()) {
+            $selUsers = $manager->createQuery('SELECT u FROM App\Entity\User u
+                                               WHERE u.zipCode = :zipCode')
+                                ->setParameter('zipCode', $search->getZipCode())
+                                ->getResult();
+            dump($selUsers);
+        }
+        
         return $this->render('homepage/search.html.twig', ['mainNavHome'=>true, 
                                                           'title'=>'Rechercher des membres',
                                                           'selUsers' => $selUsers,
