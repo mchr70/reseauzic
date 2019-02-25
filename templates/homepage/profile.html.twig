@@ -43,9 +43,13 @@
     {% endif %}
 
     {% if user.receivedRatings|length > 0 %}
+
         <h4>Evaluations</h4>
 
+        <h4>Moyenne : {{ user.avgRatings }} (calculée sur {{ user.receivedRatings|length }} évaluations)</h4>
+        
         {% for rating in user.receivedRatings %}
+
             <p>Par {{ rating.userSender.email }}, le {{ rating.createdAt|date("d/m/Y à H:i") }}</p>
             <p>{{ rating.note }} / 5</p>
             <p>{{ rating.comment }}</p>

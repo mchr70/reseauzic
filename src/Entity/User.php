@@ -477,5 +477,11 @@ class User implements UserInterface, \Serializable {
 
         return $this;
     }
-   
+
+    public function getAvgRatings(){
+        $sum = array_reduce($this->receivedRatings->toArray(), function($total, $rating){
+            return $total + $rating->getNote();
+        }, 0);
+        return $moyenne = number_format($sum / count($this->receivedRatings), 1, ',',' ');
+    }
 }
