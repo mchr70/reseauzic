@@ -32,8 +32,8 @@ class MemberType extends AbstractType
                                                     'Homme' => 1,
                                                     'Femme' => 0,
                                                 ],
-                                                'expanded' => true
-            ])
+                                                'expanded' => true,
+                                                'required' => false            ])
             ->add('zipCode', TextType::Class, ['label' => 'Code postal', 
                                                'required' => false])
             ->add('city', TextType::Class, ['label' => 'Ville',
@@ -43,7 +43,11 @@ class MemberType extends AbstractType
             ->add('phone', TextType::Class, ['label' => 'Téléphone',
                                              'required' => false])
             ->add('about', TextareaType::Class, ['label' => 'Description',
-                                                 'required' => false])  
+                                                 'required' => false]) 
+            ->add('influences', TextareaType::Class, ['label' => 'Influences',
+                                                 'required' => false])
+            ->add('material', TextareaType::Class, ['label' => 'Matériel',
+                                                 'required' => false])    
             ->add('instruments', EntityType::Class, array(
                     'class' => Instrument::Class,
                     'choice_label' => 'name',

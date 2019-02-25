@@ -43,7 +43,7 @@ class HomepageController extends Controller {
         //     $selUsers = $manager->getRepository(User::class)->findSearchedUsers($search->getZipCode(), $search->getInstruments());
         //     dump($selUsers[0]->getInstruments()[1]);
         // }
-
+        $selUsers = "";
         if ($form->isSubmitted() && $form->isValid()) {
             $selUsers = $manager->createQuery('SELECT u FROM App\Entity\User u
                                                WHERE u.zipCode = :zipCode')
@@ -56,6 +56,21 @@ class HomepageController extends Controller {
                                                           'title'=>'Rechercher des membres',
                                                           'selUsers' => $selUsers,
                                                           'form' => $form->createView()
+        ]);
+    }
+
+    /**
+     * @Route("/profile/{id}", name="member_profile")
+     */
+    public function showMemberProfile($id){
+
+        $user = $this->getDoctrine()
+                     ->getRepository(User::class)
+                     ->find($id);
+
+        return $this->render('homepage/profile.html.twig', [
+            'title' => 'Profil de ' . $user->getEmail(),
+            'user' => $user
         ]);
     }
 }

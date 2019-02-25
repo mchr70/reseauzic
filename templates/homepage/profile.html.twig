@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% endblock %}
+
+{% block body %}
+ 
+    
+    {% if user.birthDate %}
+        <p>Âge : {{ user.birthDate | age }} ans</p>
+    {% endif %}
+    <p>Inscrit(e) depuis le {{ user.registrationDate | date("d/m/Y") }}</p>
+
+    {% if user.gender %}
+        {% if user.gender ==1 %}
+            <p>Homme</p>
+         {% else %}
+            <p>Femme</p>
+        {% endif %}
+    {% endif %}
+
+    {% if user.zipCode %}
+        <p>Code postal : {{ user.zipCode }}</p>
+    {% endif %}
+
+    {% if user.address %}
+        <p>Adresse : {{ user.address }}</p>
+    {% endif %}
+
+    {% if user.phone %}
+        <p>Téléphone : {{ user.phone }}</p>
+    {% endif %}
+
+    {% if user.about %}
+        <p>Présentation : {{ user.about }}</p>
+    {% endif %}
+
+    {% if user.influences %}
+        <p>Influences : {{ user.influences }}</p>
+    {% endif %}
+
+    {% if user.material %}
+        <p>Matériel : {{ user.material }}</p>
+    {% endif %}
+
+    {% if user.receivedRatings|length > 0 %}
+        <h4>Evaluations</h4>
+
+        {% for rating in user.receivedRatings %}
+            <p>Par {{ rating.userSender.email }}, le {{ rating.createdAt|date("d/m/Y à H:i") }}</p>
+            <p>{{ rating.note }} / 5</p>
+            <p>{{ rating.comment }}</p>
+        {% endfor %}
+    {% else%}
+        {{ user.email }} n'a pas encore réçu d'évaluation.
+    {% endif %}
+    
+{% endblock %}

@@ -3,7 +3,7 @@
 {% block title %}Hello MemberController!{% endblock %}
 
 {% block body %}
-    <h3>Votre profil</h3>
+    <h3>{{ app.user.email }}</h3>
     {{ form(form) }}
 {#}
     <p>Code postal: {{ app.user.zipCode }}</p>

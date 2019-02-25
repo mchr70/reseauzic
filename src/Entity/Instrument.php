@@ -24,11 +24,6 @@ class Instrument
     private $name;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\UserInstrument", mappedBy="instrument")
-     */
-    private $userInstruments;
-
-    /**
      * @ORM\ManyToMany(targetEntity="App\Entity\User", mappedBy="instruments")
      */
     private $users;
@@ -53,37 +48,6 @@ class Instrument
     public function setName(string $name): self
     {
         $this->name = $name;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|UserInstrument[]
-     */
-    public function getUserInstruments(): Collection
-    {
-        return $this->userInstruments;
-    }
-
-    public function addUserInstrument(UserInstrument $userInstrument): self
-    {
-        if (!$this->userInstruments->contains($userInstrument)) {
-            $this->userInstruments[] = $userInstrument;
-            $userInstrument->setInstrument($this);
-        }
-
-        return $this;
-    }
-
-    public function removeUserInstrument(UserInstrument $userInstrument): self
-    {
-        if ($this->userInstruments->contains($userInstrument)) {
-            $this->userInstruments->removeElement($userInstrument);
-            // set the owning side to null (unless already changed)
-            if ($userInstrument->getInstrument() === $this) {
-                $userInstrument->setInstrument(null);
-            }
-        }
 
         return $this;
     }
