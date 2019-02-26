@@ -12,6 +12,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
@@ -67,7 +68,7 @@ class MemberType extends AbstractType
                     'query_builder'=>function(GenreRepository $gr){
                         return $gr ->createQueryBuilder('g')->orderBy('g.name','ASC');}
                 ) 
-            )
+            )          
             ->add('submit', SubmitType::class, ['label' => 'Sauvegarder les modifications'])
         ;
     }
