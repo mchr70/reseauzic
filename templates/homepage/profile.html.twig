@@ -57,5 +57,10 @@
     {% else%}
         {{ user.email }} n'a pas encore réçu d'évaluation.
     {% endif %}
+
+    {% if app.user and app.user.ratedUser(user) == false and app.user.id != user.id  %}
+        <h4>Laisser une évaluation</h4>
+        {{ form(form) }}
+    {% endif %}
     
 {% endblock %}

@@ -484,4 +484,15 @@ class User implements UserInterface, \Serializable {
         }, 0);
         return $moyenne = number_format($sum / count($this->receivedRatings), 1, ',',' ');
     }
+
+    public function ratedUser(User $user){
+        foreach($this->givenRatings as $rating){
+            if($rating->getUserRecipient()->id == $user->id){
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
+    }
 }

@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Entity\Rating;
+use App\Form\RatingType;
 use App\Entity\UserSearch;
 use App\Form\UserSearchType;
 use Symfony\Component\HttpFoundation\Request;
@@ -62,15 +64,31 @@ class HomepageController extends Controller {
     /**
      * @Route("/profile/{id}", name="member_profile")
      */
-    public function showMemberProfile($id){
+    public function showMemberProfile(Request $request, $id){
 
         $user = $this->getDoctrine()
                      ->getRepository(User::class)
                      ->find($id);
 
+        $rating = new Rating();
+        $form = $this->createForm(RatingType::class, $rating);
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()){
+            $entityManager = $this->getDoctrine()->getManager();
+
+            $rating->setCreatedAt(new \DateTime());
+            $rating->setUserSender($this->getUser());
+            $rating->setUserRecipient($user);
+
+            $entityManager->persist($rating);
+            $entityManager->flush();
+        }
+
         return $this->render('homepage/profile.html.twig', [
             'title' => 'Profil de ' . $user->getEmail(),
-            'user' => $user
+            'user' => $user,
+            'form' => $form->createView()
         ]);
     }
 }
