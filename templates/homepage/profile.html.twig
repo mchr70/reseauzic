@@ -42,6 +42,16 @@
         <p>Matériel : {{ user.material }}</p>
     {% endif %}
 
+    <h4>Instruments pratiqués</h4>
+    {% for instrument in user.instruments %}
+        <p>{{ instrument.name }}</p>
+    {% endfor %}
+
+    <h4>Genres de musique pratiqués</h4>
+    {% for genre in user.genres %}
+        <p>{{ genre.name }}</p>
+    {% endfor %}
+
     {% if user.receivedRatings|length > 0 %}
 
         <h4>Evaluations</h4>
