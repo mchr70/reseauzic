@@ -37,12 +37,12 @@ class Photo
         return $this->id;
     }
 
-    public function getSrc(): ?string
+    public function getSrc() 
     {
         return $this->src;
     }
 
-    public function setSrc(string $src): self
+    public function setSrc($src) 
     {
         $this->src = $src;
 

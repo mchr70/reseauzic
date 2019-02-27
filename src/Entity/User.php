@@ -91,10 +91,7 @@ class User implements UserInterface, \Serializable {
      * @ORM\ManyToMany(targetEntity="App\Entity\Genre", inversedBy="users")
      */
     private $genres;
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Photo", mappedBy="user")
-     */
-    private $photos;
+
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Message", mappedBy="user")
      */
@@ -117,6 +114,16 @@ class User implements UserInterface, \Serializable {
      * @OrderBy({"name" = "ASC"})
      */
     private $instruments;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $photoSrc;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $photoAlt;
     
     public function __construct() {
         $this->isActive = true;
@@ -314,32 +321,7 @@ class User implements UserInterface, \Serializable {
         }
         return $this;
     }
-    /**
-     * @return Collection|Photo[]
-     */
-    public function getPhotos(): Collection
-    {
-        return $this->photos;
-    }
-    public function addPhoto(Photo $photo): self
-    {
-        if (!$this->photos->contains($photo)) {
-            $this->photos[] = $photo;
-            $photo->setUser($this);
-        }
-        return $this;
-    }
-    public function removePhoto(Photo $photo): self
-    {
-        if ($this->photos->contains($photo)) {
-            $this->photos->removeElement($photo);
-            // set the owning side to null (unless already changed)
-            if ($photo->getUser() === $this) {
-                $photo->setUser(null);
-            }
-        }
-        return $this;
-    }
+
     /**
      * @return Collection|Message[]
      */
@@ -495,4 +477,29 @@ class User implements UserInterface, \Serializable {
             }
         }
     }
+
+    public function getPhotoSrc(): ?string
+    {
+        return $this->photoSrc;
+    }
+
+    public function setPhotoSrc(?string $photoSrc): self
+    {
+        $this->photoSrc = $photoSrc;
+
+        return $this;
+    }
+
+    public function getPhotoAlt(): ?string
+    {
+        return $this->photoAlt;
+    }
+
+    public function setPhotoAlt(?string $photoAlt): self
+    {
+        $this->photoAlt = $photoAlt;
+
+        return $this;
+    }
+
 }

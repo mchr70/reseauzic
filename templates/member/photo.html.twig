@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello MemberController!{% endblock %}
+
+{% block body %}
+    {% if app.user.photoSrc %}
+        <img width="92px" height="92px" src="{{ asset('photos/' ~ app.user.photoSrc) }}" alt="{{ app.user.photoAlt }}" />
+    {% endif %}
+    {{ form(form) }}
+{% endblock %}

@@ -87,6 +87,7 @@
     <parameter key="container.dumper.inline_class_loader">true</parameter>
     <parameter key="env(DATABASE_URL)"></parameter>
     <parameter key="locale">en</parameter>
+    <parameter key="upload_directory">C:\wamp\www\reseauzic/public/photos</parameter>
     <parameter key="fragment.renderer.hinclude.global_template"></parameter>
     <parameter key="fragment.path">/_fragment</parameter>
     <parameter key="kernel.secret">%env(APP_SECRET)%</parameter>
@@ -419,7 +420,13 @@
     <service id="App\Form\MemberType" class="App\Form\MemberType" autowire="true" autoconfigure="true">
       <tag name="form.type"/>
     </service>
+    <service id="App\Form\PhotoType" class="App\Form\PhotoType" autowire="true" autoconfigure="true">
+      <tag name="form.type"/>
+    </service>
     <service id="App\Form\RatingType" class="App\Form\RatingType" autowire="true" autoconfigure="true">
+      <tag name="form.type"/>
+    </service>
+    <service id="App\Form\UploadType" class="App\Form\UploadType" autowire="true" autoconfigure="true">
       <tag name="form.type"/>
     </service>
     <service id="App\Form\UserSearchType" class="App\Form\UserSearchType" autowire="true" autoconfigure="true">
@@ -449,6 +456,10 @@
       <argument type="service" id="doctrine"/>
     </service>
     <service id="App\Repository\ThreadRepository" class="App\Repository\ThreadRepository" autowire="true" autoconfigure="true">
+      <tag name="doctrine.repository_service"/>
+      <argument type="service" id="doctrine"/>
+    </service>
+    <service id="App\Repository\UploadRepository" class="App\Repository\UploadRepository" autowire="true" autoconfigure="true">
       <tag name="doctrine.repository_service"/>
       <argument type="service" id="doctrine"/>
     </service>
@@ -717,7 +728,9 @@
       </argument>
       <argument type="collection">
         <argument>App\Form\MemberType</argument>
+        <argument>App\Form\PhotoType</argument>
         <argument>App\Form\RatingType</argument>
+        <argument>App\Form\UploadType</argument>
         <argument>App\Form\UserSearchType</argument>
         <argument>App\Form\UserType</argument>
         <argument>Symfony\Component\Form\Extension\Core\Type\FormType</argument>
@@ -963,7 +976,7 @@
       <argument type="service" id="form.registry"/>
     </service>
     <service id="form.extension" class="Symfony\Component\Form\Extension\DependencyInjection\DependencyInjectionExtension" public="false">
-      <argument type="service" id=".service_locator.V9g4zG."/>
+      <argument type="service" id=".service_locator.RxynvLx"/>
       <argument type="collection">
         <argument key="Symfony\Component\Form\Extension\Core\Type\FormType" type="iterator">
           <argument type="service" id="form.type_extension.form.transformation_failure_handling"/>
@@ -2778,7 +2791,7 @@
       <factory class="Doctrine\ORM\EntityManager" method="create"/>
     </service>
     <service id="doctrine.orm.container_repository_factory" class="Doctrine\Bundle\DoctrineBundle\Repository\ContainerRepositoryFactory" public="false">
-      <argument type="service" id=".service_locator..xqo2xd"/>
+      <argument type="service" id=".service_locator.GJL2lAz"/>
     </service>
     <service id="doctrine.orm.manager_configurator.abstract" class="Doctrine\Bundle\DoctrineBundle\ManagerConfigurator" abstract="true">
       <argument type="collection"/>
@@ -4481,8 +4494,12 @@
     <service id=".abstract.instanceof.App\DataFixtures\UserFixture" class="App\DataFixtures\UserFixture" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Symfony\Component\Form\FormTypeInterface.0.App\Form\MemberType" class="App\Form\MemberType" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Form\MemberType" class="App\Form\MemberType" autowire="true" autoconfigure="true" abstract="true"/>
+    <service id=".instanceof.Symfony\Component\Form\FormTypeInterface.0.App\Form\PhotoType" class="App\Form\PhotoType" autowire="true" abstract="true"/>
+    <service id=".abstract.instanceof.App\Form\PhotoType" class="App\Form\PhotoType" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Symfony\Component\Form\FormTypeInterface.0.App\Form\RatingType" class="App\Form\RatingType" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Form\RatingType" class="App\Form\RatingType" autowire="true" autoconfigure="true" abstract="true"/>
+    <service id=".instanceof.Symfony\Component\Form\FormTypeInterface.0.App\Form\UploadType" class="App\Form\UploadType" autowire="true" abstract="true"/>
+    <service id=".abstract.instanceof.App\Form\UploadType" class="App\Form\UploadType" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Symfony\Component\Form\FormTypeInterface.0.App\Form\UserSearchType" class="App\Form\UserSearchType" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Form\UserSearchType" class="App\Form\UserSearchType" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Symfony\Component\Form\FormTypeInterface.0.App\Form\UserType" class="App\Form\UserType" autowire="true" abstract="true"/>
@@ -4499,6 +4516,8 @@
     <service id=".abstract.instanceof.App\Repository\RatingRepository" class="App\Repository\RatingRepository" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepositoryInterface.0.App\Repository\ThreadRepository" class="App\Repository\ThreadRepository" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Repository\ThreadRepository" class="App\Repository\ThreadRepository" autowire="true" autoconfigure="true" abstract="true"/>
+    <service id=".instanceof.Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepositoryInterface.0.App\Repository\UploadRepository" class="App\Repository\UploadRepository" autowire="true" abstract="true"/>
+    <service id=".abstract.instanceof.App\Repository\UploadRepository" class="App\Repository\UploadRepository" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepositoryInterface.0.App\Repository\UserRepository" class="App\Repository\UserRepository" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Repository\UserRepository" class="App\Repository\UserRepository" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Twig_ExtensionInterface.0.twig.extension.date" class="Guzzlefry\Twig\AgeExtension" autowire="true" abstract="true"/>
@@ -4754,11 +4773,13 @@
       <argument type="service" id="debug.argument_resolver.variadic.inner"/>
       <argument type="service" id="debug.stopwatch"/>
     </service>
-    <service id=".service_locator.V9g4zG." class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
+    <service id=".service_locator.RxynvLx" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
       <tag name="container.service_locator"/>
       <argument type="collection">
         <argument key="App\Form\MemberType" type="service" id="App\Form\MemberType"/>
+        <argument key="App\Form\PhotoType" type="service" id="App\Form\PhotoType"/>
         <argument key="App\Form\RatingType" type="service" id="App\Form\RatingType"/>
+        <argument key="App\Form\UploadType" type="service" id="App\Form\UploadType"/>
         <argument key="App\Form\UserSearchType" type="service" id="App\Form\UserSearchType"/>
         <argument key="App\Form\UserType" type="service" id="App\Form\UserType"/>
         <argument key="Symfony\Bridge\Doctrine\Form\Type\EntityType" type="service" id="form.type.entity"/>
@@ -4772,7 +4793,7 @@
         <argument key="doctrine.orm.default_listeners.attach_entity_listeners" type="service" id="doctrine.orm.default_listeners.attach_entity_listeners"/>
       </argument>
     </service>
-    <service id=".service_locator..xqo2xd" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
+    <service id=".service_locator.GJL2lAz" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
       <tag name="container.service_locator"/>
       <argument type="collection">
         <argument key="App\Repository\GenreRepository" type="service" id="App\Repository\GenreRepository"/>
@@ -4781,6 +4802,7 @@
         <argument key="App\Repository\PhotoRepository" type="service" id="App\Repository\PhotoRepository"/>
         <argument key="App\Repository\RatingRepository" type="service" id="App\Repository\RatingRepository"/>
         <argument key="App\Repository\ThreadRepository" type="service" id="App\Repository\ThreadRepository"/>
+        <argument key="App\Repository\UploadRepository" type="service" id="App\Repository\UploadRepository"/>
         <argument key="App\Repository\UserRepository" type="service" id="App\Repository\UserRepository"/>
       </argument>
     </service>

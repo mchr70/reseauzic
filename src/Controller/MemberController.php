@@ -1,13 +1,14 @@
 <?php
 
 namespace App\Controller;
-
 use App\Entity\User;
+use App\Entity\Upload;
 use App\Form\MemberType;
+ 
+use App\Form\UploadType;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Routing\Annotation\Route;
- 
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -39,6 +40,34 @@ class MemberController extends Controller {
         return $this->render('member/index.html.twig', ['mainNavMember'=>true, 
                                                         'title'=>'Espace Membre',
                                                         'form' => $form->createView()]);
+    }
+
+    /**
+     * @Route("/photo", name="member_photo")
+     */
+    public function showUpload(Request $request){
+
+        $upload = new Upload();
+        $form = $this->createForm(UploadType::class, $upload);
+
+        $form->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid()){
+            $file = $upload->getName();
+            $fileName = $this->getUser()->getId().'.'.$file->guessExtension();
+            $file->move($this->getParameter('upload_directory'), $fileName);
+            
+            $this->getUser()->setPhotoSrc($fileName);
+            $this->getUser()->setPhotoAlt('photo de '.$this->getUser()->getEmail());
+
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($upload);
+            $entityManager->flush();
+        }
+
+        return $this->render('member/photo.html.twig', ['mainNavMember'=>true, 
+                                                        'title'=>'Votre photo',
+                                                        'form' => $form->createView()
+                                                        ]);
     }
 
 }
