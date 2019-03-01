@@ -5,8 +5,10 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Entity\Rating;
 use App\Form\RatingType;
+use App\Entity\Instrument;
 use App\Entity\UserSearch;
 use App\Form\UserSearchType;
+use Doctrine\ORM\EntityManager;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Routing\Annotation\Route;
@@ -41,19 +43,27 @@ class HomepageController extends Controller {
         $search = new UserSearch();
         $form = $this->createForm(UserSearchType::class, $search);
         $form->handleRequest($request);
-        // if ($form->isSubmitted() && $form->isValid()) {
-        //     $selUsers = $manager->getRepository(User::class)->findSearchedUsers($search->getZipCode(), $search->getInstruments());
-        //     dump($selUsers[0]->getInstruments()[1]);
-        // }
+
         $selUsers = "";
         if ($form->isSubmitted() && $form->isValid()) {
-            $selUsers = $manager->createQuery('SELECT u FROM App\Entity\User u
-                                               WHERE u.zipCode = :zipCode')
-                                ->setParameter('zipCode', $search->getZipCode())
-                                ->getResult();
+            $em = $this->getDoctrine()->getManager();
+ 
+            $RAW_QUERY = 'SELECT *
+                          FROM user u 
+                          INNER JOIN user_instrument ui 
+                          ON ui.user_id = u.id
+                          WHERE ui.instrument_id IN (2,3)
+                          AND u.zip_code = :zipCode';
+            
+            $statement = $em->getConnection()->prepare($RAW_QUERY);
+            $statement->bindValue('zipCode', "67300");
+            $statement->execute();
+    
+            $selUsers = $statement->fetchAll();
+
             dump($selUsers);
         }
-        
+  
         return $this->render('homepage/search.html.twig', ['mainNavHome'=>true, 
                                                           'title'=>'Rechercher des membres',
                                                           'selUsers' => $selUsers,

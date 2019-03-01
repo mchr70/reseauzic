@@ -5,6 +5,8 @@
 {% block body %}
     {% if app.user.photoSrc %}
         <img width="92px" height="92px" src="{{ asset('photos/' ~ app.user.photoSrc) }}" alt="{{ app.user.photoAlt }}" />
+    {% else %}
+        <img width="92px" height="92px" src="{{ asset('photos/0.png') }}" alt="{{ app.user.photoAlt }}" />
     {% endif %}
     {{ form(form) }}
 {% endblock %}

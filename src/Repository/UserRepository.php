@@ -29,19 +29,6 @@ class UserRepository extends ServiceEntityRepository
         return $qb->getQuery()->getResult();
     }
 
-    // /**
-    //  * @return query
-    //  */
-    // public function findSearchedUsers($zipcode, $instruments){
-    //     $qb = $this->createQueryBuilder('u');
-    //     $qb->join('u.instruments', 'i');
-    //     $qb->where($qb->expr()->eq('u.zipCode', $zipcode));
-    //     foreach($instruments as $instru){
-    //         $qb->andWhere($qb->expr()->eq('i.id', $instru->getId()));
-    //     }        
-    //     return $qb->getQuery()->getResult();
-    // }
-
 
     /*
     public function findOneBySomeField($value): ?Level
