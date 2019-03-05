@@ -70,4 +70,16 @@ class MemberController extends Controller {
                                                         ]);
     }
 
+        /**
+     * @Route("/threads", name="member_threads")
+     */
+    public function showThreads(Request $request){
+        
+
+
+        return $this->render('member/threads.html.twig', ['mainNavMember'=>true, 
+                                                        'title'=>'Vos fils de discussion'
+                                                        ]);
+    }
+
 }
