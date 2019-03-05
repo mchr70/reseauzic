@@ -124,6 +124,16 @@ class User implements UserInterface, \Serializable {
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $photoAlt;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Thread", mappedBy="userCreator")
+     */
+    private $threads;
+
+        /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Thread", mappedBy="userRecipient")
+     */
+    private $threads2;
     
     public function __construct() {
         $this->isActive = true;
@@ -134,6 +144,7 @@ class User implements UserInterface, \Serializable {
         $this->givenRatings = new ArrayCollection();
         $this->receivedRatings = new ArrayCollection();
         $this->instruments = new ArrayCollection();
+        $this->threads = new ArrayCollection();
         
         // may not be needed, see section on salt below
         // $this->salt = md5(uniqid('', true));
@@ -498,6 +509,39 @@ class User implements UserInterface, \Serializable {
     public function setPhotoAlt(?string $photoAlt): self
     {
         $this->photoAlt = $photoAlt;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Thread[]
+     */
+    public function getThreads(): Collection
+    {
+        return new ArrayCollection(
+            array_merge($this->threads->toArray(), $this->threads2->toArray())
+        );
+    }
+
+    public function addThread(Thread $thread): self
+    {
+        if (!$this->threads->contains($thread)) {
+            $this->threads[] = $thread;
+            $thread->setUserCreator($this);
+        }
+
+        return $this;
+    }
+
+    public function removeThread(Thread $thread): self
+    {
+        if ($this->threads->contains($thread)) {
+            $this->threads->removeElement($thread);
+            // set the owning side to null (unless already changed)
+            if ($thread->getUserCreator() === $this) {
+                $thread->setUserCreator(null);
+            }
+        }
 
         return $this;
     }

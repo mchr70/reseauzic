@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello MemberController!{% endblock %}
+
+{% block body %}
+    {% for message in thread.messages %}
+        {% if message.userSender.id == app.user.id %}
+            Moi, le {{ message.timestamp|date('d/m/Y à H:i:s') }}<p>{{ message.text }}</p>
+        {% else %}
+            {{ message.userSender.email }}, le {{ message.timestamp|date('d/m/Y à H:i:s') }}<p>{{ message.text }}</p>
+        {% endif %}
+    {% endfor %}
+{% endblock %}

@@ -2,9 +2,10 @@
 
 namespace App\Controller;
 use App\Entity\User;
+use App\Entity\Thread;
 use App\Entity\Upload;
-use App\Form\MemberType;
  
+use App\Form\MemberType;
 use App\Form\UploadType;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -70,15 +71,30 @@ class MemberController extends Controller {
                                                         ]);
     }
 
-        /**
+    /**
      * @Route("/threads", name="member_threads")
      */
     public function showThreads(Request $request){
-        
+
 
 
         return $this->render('member/threads.html.twig', ['mainNavMember'=>true, 
                                                         'title'=>'Vos fils de discussion'
+                                                        ]);
+    }
+
+    /**
+     * @Route("/thread/{id}", name="thread")
+     */
+    public function showThread(Request $request, $id){
+        
+        $thread = $this->getDoctrine()
+                     ->getRepository(Thread::class)
+                     ->find($id);
+
+        return $this->render('member/thread.html.twig', ['mainNavMember'=>true, 
+                                                        'title'=> $thread->getTitle(),
+                                                        'thread' => $thread
                                                         ]);
     }
 

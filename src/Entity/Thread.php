@@ -28,9 +28,22 @@ class Thread
      */
     private $messages;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="threads")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $userCreator;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="threads")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $userRecipient;
+
     public function __construct()
     {
         $this->messages = new ArrayCollection();
+        $this->users = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -77,6 +90,30 @@ class Thread
                 $message->setThread(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getUserCreator(): ?User
+    {
+        return $this->userCreator;
+    }
+
+    public function setUserCreator(?User $userCreator): self
+    {
+        $this->userCreator = $userCreator;
+
+        return $this;
+    }
+
+    public function getUserRecipient(): ?User
+    {
+        return $this->userRecipient;
+    }
+
+    public function setUserRecipient(?User $userRecipient): self
+    {
+        $this->userRecipient = $userRecipient;
 
         return $this;
     }

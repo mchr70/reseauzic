@@ -3,5 +3,7 @@
 {% block title %}Hello MemberController!{% endblock %}
 
 {% block body %}
-
+    {% for thread in app.user.threads %}
+        <a href="{{ path('thread', {id: thread.id}) }}">{{ thread.title }}</a>
+    {% endfor %}
 {% endblock %}

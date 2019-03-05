@@ -27,6 +27,7 @@ class srcApp_KernelDevDebugContainerUrlGenerator extends Symfony\Component\Routi
         'app_member_index' => [[], ['_controller' => 'App\\Controller\\MemberController::index'], [], [['text', '/member/']], [], []],
         'member_photo' => [[], ['_controller' => 'App\\Controller\\MemberController::showUpload'], [], [['text', '/member/photo']], [], []],
         'member_threads' => [[], ['_controller' => 'App\\Controller\\MemberController::showThreads'], [], [['text', '/member/threads']], [], []],
+        'thread' => [['id'], ['_controller' => 'App\\Controller\\MemberController::showThread'], [], [['variable', '/', '[^/]++', 'id', true], ['text', '/member/thread']], [], []],
         'app_registration_register' => [[], ['_controller' => 'App\\Controller\\RegistrationController::registerAction'], [], [['text', '/register']], [], []],
         'login' => [[], ['_controller' => 'App\\Controller\\SecurityController::login'], [], [['text', '/login']], [], []],
         '_twig_error_test' => [['code', '_format'], ['_controller' => 'twig.controller.preview_error::previewErrorPageAction', '_format' => 'html'], ['code' => '\\d+'], [['variable', '.', '[^/]++', '_format', true], ['variable', '/', '\\d+', 'code', true], ['text', '/_error']], [], []],
