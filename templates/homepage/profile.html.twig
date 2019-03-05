@@ -72,5 +72,8 @@
         <h4>Laisser une évaluation</h4>
         {{ form(form) }}
     {% endif %}
+    {% if app.user and app.user.id != user.id  %}
+        <a href="{{ path('thread_editor', {"recipientId": user.id}) }}">Commencer un fil de discussion avec {{ user.email }}</a> 
+    {% endif %}
     
 {% endblock %}

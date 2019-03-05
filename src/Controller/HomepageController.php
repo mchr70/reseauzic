@@ -4,9 +4,11 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Entity\Rating;
+use App\Entity\Thread;
 use App\Form\RatingType;
 use App\Entity\Instrument;
 use App\Entity\UserSearch;
+use App\Form\ThreadFormType;
 use App\Form\UserSearchType;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\HttpFoundation\Request;

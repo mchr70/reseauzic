@@ -426,6 +426,9 @@
     <service id="App\Form\RatingType" class="App\Form\RatingType" autowire="true" autoconfigure="true">
       <tag name="form.type"/>
     </service>
+    <service id="App\Form\ThreadFormType" class="App\Form\ThreadFormType" autowire="true" autoconfigure="true">
+      <tag name="form.type"/>
+    </service>
     <service id="App\Form\UploadType" class="App\Form\UploadType" autowire="true" autoconfigure="true">
       <tag name="form.type"/>
     </service>
@@ -730,6 +733,7 @@
         <argument>App\Form\MemberType</argument>
         <argument>App\Form\PhotoType</argument>
         <argument>App\Form\RatingType</argument>
+        <argument>App\Form\ThreadFormType</argument>
         <argument>App\Form\UploadType</argument>
         <argument>App\Form\UserSearchType</argument>
         <argument>App\Form\UserType</argument>
@@ -976,7 +980,7 @@
       <argument type="service" id="form.registry"/>
     </service>
     <service id="form.extension" class="Symfony\Component\Form\Extension\DependencyInjection\DependencyInjectionExtension" public="false">
-      <argument type="service" id=".service_locator.RxynvLx"/>
+      <argument type="service" id=".service_locator.lg7Fuo2"/>
       <argument type="collection">
         <argument key="Symfony\Component\Form\Extension\Core\Type\FormType" type="iterator">
           <argument type="service" id="form.type_extension.form.transformation_failure_handling"/>
@@ -4498,6 +4502,8 @@
     <service id=".abstract.instanceof.App\Form\PhotoType" class="App\Form\PhotoType" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Symfony\Component\Form\FormTypeInterface.0.App\Form\RatingType" class="App\Form\RatingType" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Form\RatingType" class="App\Form\RatingType" autowire="true" autoconfigure="true" abstract="true"/>
+    <service id=".instanceof.Symfony\Component\Form\FormTypeInterface.0.App\Form\ThreadFormType" class="App\Form\ThreadFormType" autowire="true" abstract="true"/>
+    <service id=".abstract.instanceof.App\Form\ThreadFormType" class="App\Form\ThreadFormType" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Symfony\Component\Form\FormTypeInterface.0.App\Form\UploadType" class="App\Form\UploadType" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Form\UploadType" class="App\Form\UploadType" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Symfony\Component\Form\FormTypeInterface.0.App\Form\UserSearchType" class="App\Form\UserSearchType" autowire="true" abstract="true"/>
@@ -4773,12 +4779,13 @@
       <argument type="service" id="debug.argument_resolver.variadic.inner"/>
       <argument type="service" id="debug.stopwatch"/>
     </service>
-    <service id=".service_locator.RxynvLx" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
+    <service id=".service_locator.lg7Fuo2" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
       <tag name="container.service_locator"/>
       <argument type="collection">
         <argument key="App\Form\MemberType" type="service" id="App\Form\MemberType"/>
         <argument key="App\Form\PhotoType" type="service" id="App\Form\PhotoType"/>
         <argument key="App\Form\RatingType" type="service" id="App\Form\RatingType"/>
+        <argument key="App\Form\ThreadFormType" type="service" id="App\Form\ThreadFormType"/>
         <argument key="App\Form\UploadType" type="service" id="App\Form\UploadType"/>
         <argument key="App\Form\UserSearchType" type="service" id="App\Form\UserSearchType"/>
         <argument key="App\Form\UserType" type="service" id="App\Form\UserType"/>

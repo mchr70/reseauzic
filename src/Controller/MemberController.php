@@ -7,6 +7,7 @@ use App\Entity\Upload;
  
 use App\Form\MemberType;
 use App\Form\UploadType;
+use App\Form\ThreadFormType;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Routing\Annotation\Route;
@@ -98,4 +99,23 @@ class MemberController extends Controller {
                                                         ]);
     }
 
+    /**
+     * @Route("/threadeditor/{recipientId}", name="thread_editor")
+     */
+    public function startThread($recipientId, Request $request){
+
+        $user = $this->getDoctrine()
+                     ->getRepository(User::class)
+                     ->find($recipientId);
+
+        $thread = new Thread();
+        $form = $this->createForm(ThreadFormType::class, $thread);
+        $form->handleRequest($request);
+
+        return $this->render('member/threadeditor.html.twig', ['mainNavMember'=>true, 
+                                                               'title'=>'Commencer un fil de discussion avec '.$user->getEmail(),
+                                                               'user' => $user,
+                                                               'form' => $form->createView()
+                                                              ]);
+    }
 }
