@@ -54,11 +54,11 @@ class HomepageController extends Controller {
                           FROM user u 
                           INNER JOIN user_instrument ui 
                           ON ui.user_id = u.id
-                          WHERE ui.instrument_id IN (2,3)
+                          WHERE ui.instrument_id IN (1,3)
                           AND u.zip_code = :zipCode';
             
             $statement = $em->getConnection()->prepare($RAW_QUERY);
-            $statement->bindValue('zipCode', "67300");
+            $statement->bindValue('zipCode', $search->getZipCode());
             $statement->execute();
     
             $selUsers = $statement->fetchAll();

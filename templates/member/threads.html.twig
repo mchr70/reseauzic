@@ -4,6 +4,8 @@
 
 {% block body %}
     {% for thread in app.user.threads %}
-        <p><a href="{{ path('thread', {id: thread.id}) }}">{{ thread.title }}</a></p>
+        <p><a href="{{ path('thread', {id: thread.id}) }}">{{ thread.title }}</a>    
+            <span><a href="{{ path('thread_delete', {"id": thread.id}) }}" onclick="return confirm('Etes-vous sûr(e) de vouloir supprimer ce fil?')">supprimer</a>
+        </p>
     {% endfor %}
 {% endblock %}

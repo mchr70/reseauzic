@@ -114,18 +114,6 @@ class Message
         return $this;
     }
 
-    public function getThread(): ?Thread
-    {
-        return $this->thread;
-    }
-
-    public function setThread(?Thread $thread): self
-    {
-        $this->thread = $thread;
-
-        return $this;
-    }
-
     public function getUserSender(): ?User
     {
         return $this->userSender;
@@ -134,6 +122,18 @@ class Message
     public function setUserSender(?User $userSender): self
     {
         $this->userSender = $userSender;
+
+        return $this;
+    }
+
+    public function getThread(): ?Thread
+    {
+        return $this->thread;
+    }
+
+    public function setThread(?Thread $thread): self
+    {
+        $this->thread = $thread;
 
         return $this;
     }

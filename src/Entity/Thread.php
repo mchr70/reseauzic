@@ -24,11 +24,6 @@ class Thread
     private $title;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Message", mappedBy="thread")
-     */
-    private $messages;
-
-    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="threads")
      * @ORM\JoinColumn(nullable=false)
      */
@@ -39,6 +34,11 @@ class Thread
      * @ORM\JoinColumn(nullable=false)
      */
     private $userRecipient;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Message", mappedBy="thread", orphanRemoval=true)
+     */
+    private $messages;
 
     public function __construct()
     {
@@ -59,6 +59,30 @@ class Thread
     public function setTitle(string $title): self
     {
         $this->title = $title;
+
+        return $this;
+    }
+
+    public function getUserCreator(): ?User
+    {
+        return $this->userCreator;
+    }
+
+    public function setUserCreator(?User $userCreator): self
+    {
+        $this->userCreator = $userCreator;
+
+        return $this;
+    }
+
+    public function getUserRecipient(): ?User
+    {
+        return $this->userRecipient;
+    }
+
+    public function setUserRecipient(?User $userRecipient): self
+    {
+        $this->userRecipient = $userRecipient;
 
         return $this;
     }
@@ -90,30 +114,6 @@ class Thread
                 $message->setThread(null);
             }
         }
-
-        return $this;
-    }
-
-    public function getUserCreator(): ?User
-    {
-        return $this->userCreator;
-    }
-
-    public function setUserCreator(?User $userCreator): self
-    {
-        $this->userCreator = $userCreator;
-
-        return $this;
-    }
-
-    public function getUserRecipient(): ?User
-    {
-        return $this->userRecipient;
-    }
-
-    public function setUserRecipient(?User $userRecipient): self
-    {
-        $this->userRecipient = $userRecipient;
 
         return $this;
     }

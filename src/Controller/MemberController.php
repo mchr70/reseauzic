@@ -92,7 +92,7 @@ class MemberController extends Controller {
      * @Route("/thread/{id}", name="thread")
      */
     public function showThread(Request $request, $id){
-        
+
         $thread = $this->getDoctrine()
                      ->getRepository(Thread::class)
                      ->find($id);
@@ -102,14 +102,23 @@ class MemberController extends Controller {
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()){
+
+
+            $message->setUserSender($this->getUser());
             if($this->getUser() == $thread->getUserCreator()){
                 $message->setUserRecipient($thread->getUserRecipient());
             }
             else{
                 $message->setUserRecipient($thread->getUserCreator());
             }
+            $message->setThread($thread);
+            $message->setTimestamp(new \DateTime());
+            $message->setIsRead(false);
+
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($message);
+            $entityManager->flush(); 
         }
-        dump($message->getUserRecipient());
 
         return $this->render('member/thread.html.twig', ['mainNavMember'=>true, 
                                                         'title'=> $thread->getTitle(),
@@ -159,5 +168,22 @@ class MemberController extends Controller {
                                                                'user' => $user,
                                                                'form' => $form->createView()
                                                               ]);
+    }
+
+    /**
+     * @Route("/threaddelete/{id}", name="thread_delete")
+     */
+    public function deleteThread($id){
+
+        $thread = $this->getDoctrine()
+                     ->getRepository(Thread::class)
+                     ->find($id);
+
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->remove($thread); 
+        $entityManager->flush();
+
+        return $this->redirectToRoute('member_threads');
+
     }
 }
