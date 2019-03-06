@@ -1,12 +1,15 @@
 <?php
 
 namespace App\Controller;
+ 
 use App\Entity\User;
 use App\Entity\Thread;
-use App\Entity\Upload;
  
+use App\Entity\Upload;
+use App\Entity\Message;
 use App\Form\MemberType;
 use App\Form\UploadType;
+use App\Form\MessageType;
 use App\Form\ThreadFormType;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -14,6 +17,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+ 
 
 /** @Route("/member") */
 class MemberController extends Controller {
@@ -93,9 +97,24 @@ class MemberController extends Controller {
                      ->getRepository(Thread::class)
                      ->find($id);
 
+        $message = new Message();
+        $form = $this->createForm(MessageType::class, $message);
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()){
+            if($this->getUser() == $thread->getUserCreator()){
+                $message->setUserRecipient($thread->getUserRecipient());
+            }
+            else{
+                $message->setUserRecipient($thread->getUserCreator());
+            }
+        }
+        dump($message->getUserRecipient());
+
         return $this->render('member/thread.html.twig', ['mainNavMember'=>true, 
                                                         'title'=> $thread->getTitle(),
-                                                        'thread' => $thread
+                                                        'thread' => $thread,
+                                                        'form' => $form->createView()
                                                         ]);
     }
 
@@ -109,8 +128,31 @@ class MemberController extends Controller {
                      ->find($recipientId);
 
         $thread = new Thread();
+        $message = new Message();
         $form = $this->createForm(ThreadFormType::class, $thread);
         $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()){
+ 
+            $data = $form['text']->getData();
+
+            $thread->setUserCreator($this->getUser());
+            $thread->setUserRecipient($user);
+
+            $message->setUserSender($this->getUser());
+            $message->setUserRecipient($user);
+            $message->setThread($thread);
+            $message->setTimestamp(new \DateTime());
+            $message->setText($data);
+            $message->setIsRead(false);
+
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($thread);
+            $entityManager->persist($message);
+            $entityManager->flush();
+
+            $this->addFlash('success', 'Le nouveau fil de discussion a été créé et votre message a été envoyé à '.$user->getEmail());
+        }
 
         return $this->render('member/threadeditor.html.twig', ['mainNavMember'=>true, 
                                                                'title'=>'Commencer un fil de discussion avec '.$user->getEmail(),

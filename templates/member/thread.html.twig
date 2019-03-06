@@ -10,4 +10,6 @@
             {{ message.userSender.email }}, le {{ message.timestamp|date('d/m/Y à H:i:s') }}<p>{{ message.text }}</p>
         {% endif %}
     {% endfor %}
+    <h4>Ajouter un message dans ce fil de discussion</h4>
+    {{ form(form) }}
 {% endblock %}

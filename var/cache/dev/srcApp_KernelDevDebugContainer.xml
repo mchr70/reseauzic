@@ -420,6 +420,9 @@
     <service id="App\Form\MemberType" class="App\Form\MemberType" autowire="true" autoconfigure="true">
       <tag name="form.type"/>
     </service>
+    <service id="App\Form\MessageType" class="App\Form\MessageType" autowire="true" autoconfigure="true">
+      <tag name="form.type"/>
+    </service>
     <service id="App\Form\PhotoType" class="App\Form\PhotoType" autowire="true" autoconfigure="true">
       <tag name="form.type"/>
     </service>
@@ -731,6 +734,7 @@
       </argument>
       <argument type="collection">
         <argument>App\Form\MemberType</argument>
+        <argument>App\Form\MessageType</argument>
         <argument>App\Form\PhotoType</argument>
         <argument>App\Form\RatingType</argument>
         <argument>App\Form\ThreadFormType</argument>
@@ -980,7 +984,7 @@
       <argument type="service" id="form.registry"/>
     </service>
     <service id="form.extension" class="Symfony\Component\Form\Extension\DependencyInjection\DependencyInjectionExtension" public="false">
-      <argument type="service" id=".service_locator.lg7Fuo2"/>
+      <argument type="service" id=".service_locator.ui8YWeU"/>
       <argument type="collection">
         <argument key="Symfony\Component\Form\Extension\Core\Type\FormType" type="iterator">
           <argument type="service" id="form.type_extension.form.transformation_failure_handling"/>
@@ -4498,6 +4502,8 @@
     <service id=".abstract.instanceof.App\DataFixtures\UserFixture" class="App\DataFixtures\UserFixture" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Symfony\Component\Form\FormTypeInterface.0.App\Form\MemberType" class="App\Form\MemberType" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Form\MemberType" class="App\Form\MemberType" autowire="true" autoconfigure="true" abstract="true"/>
+    <service id=".instanceof.Symfony\Component\Form\FormTypeInterface.0.App\Form\MessageType" class="App\Form\MessageType" autowire="true" abstract="true"/>
+    <service id=".abstract.instanceof.App\Form\MessageType" class="App\Form\MessageType" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Symfony\Component\Form\FormTypeInterface.0.App\Form\PhotoType" class="App\Form\PhotoType" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Form\PhotoType" class="App\Form\PhotoType" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Symfony\Component\Form\FormTypeInterface.0.App\Form\RatingType" class="App\Form\RatingType" autowire="true" abstract="true"/>
@@ -4779,10 +4785,11 @@
       <argument type="service" id="debug.argument_resolver.variadic.inner"/>
       <argument type="service" id="debug.stopwatch"/>
     </service>
-    <service id=".service_locator.lg7Fuo2" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
+    <service id=".service_locator.ui8YWeU" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
       <tag name="container.service_locator"/>
       <argument type="collection">
         <argument key="App\Form\MemberType" type="service" id="App\Form\MemberType"/>
+        <argument key="App\Form\MessageType" type="service" id="App\Form\MessageType"/>
         <argument key="App\Form\PhotoType" type="service" id="App\Form\PhotoType"/>
         <argument key="App\Form\RatingType" type="service" id="App\Form\RatingType"/>
         <argument key="App\Form\ThreadFormType" type="service" id="App\Form\ThreadFormType"/>

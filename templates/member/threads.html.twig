@@ -4,6 +4,6 @@
 
 {% block body %}
     {% for thread in app.user.threads %}
-        <a href="{{ path('thread', {id: thread.id}) }}">{{ thread.title }}</a>
+        <p><a href="{{ path('thread', {id: thread.id}) }}">{{ thread.title }}</a></p>
     {% endfor %}
 {% endblock %}
