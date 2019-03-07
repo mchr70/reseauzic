@@ -47,14 +47,26 @@ class HomepageController extends Controller {
         $form->handleRequest($request);
 
         $selUsers = "";
+
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $instIds = array();
+            foreach($search->getInstruments() as $instrument){
+                $instIds[] = $instrument->getId();
+            }
+            $genresIds = array();
+            foreach($search->getGenres() as $genre){
+                $genresIds[] = $genre->getId();
+            }
+             
+
             $em = $this->getDoctrine()->getManager();
- 
+
             $RAW_QUERY = 'SELECT *
                           FROM user u 
                           INNER JOIN user_instrument ui 
-                          ON ui.user_id = u.id
-                          WHERE ui.instrument_id IN (1,3)
+                            ON ui.user_id = u.id
+                            AND ui.instrument_id IN (' . implode(',', $instIds) . ')
                           AND u.zip_code = :zipCode';
             
             $statement = $em->getConnection()->prepare($RAW_QUERY);

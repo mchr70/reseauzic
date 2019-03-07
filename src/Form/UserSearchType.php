@@ -33,7 +33,7 @@ class UserSearchType extends AbstractType
                  'label' => 'Instruments pratiqués',
                  'expanded' => true,
                  'multiple' => true,
-                 'mapped' => false,
+                //  'mapped' => false,
                  'query_builder'=>function(InstrumentRepository $ir){
                      return $ir ->createQueryBuilder('i')->orderBy('i.name','ASC');}
                  ) 
