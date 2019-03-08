@@ -4,5 +4,7 @@
 
 {% block body %}
     {{ form(form) }}
-    
+    {% for user in selUsers %}
+        <p><a href="{{ path('member_profile', {"id":user.id}) }}">{{ user.email }}</a></p>
+    {% endfor %}
 {% endblock %}

@@ -29,6 +29,32 @@ class UserRepository extends ServiceEntityRepository
         return $qb->getQuery()->getResult();
     }
 
+    public function findByMultiple($genres, $instrus, $zipcode) {
+
+        $qb = $this->createQueryBuilder('u');
+        $qb->leftJoin("u.instruments", "i")
+            ->leftJoin("u.genres", "g");{
+            if(!empty($zipcode)){
+                $qb->where("u.zipCode LIKE :zipcode")
+                ->setParameter(':zipcode', '%'.$zipcode.'%');
+            }
+            if(!empty($instrus)){
+                $qb->andWhere(
+                    $qb->expr()->in('i.id', ':instrus')
+                )
+                ->setParameter(':instrus', $instrus);
+            }
+            if(!empty($genres)){
+                $qb->andWhere(
+                    $qb->expr()->in('g.id', ':genres')
+                )
+                ->setParameter(':genres', $genres);
+            }
+        
+        return $qb->getQuery()->getResult();
+        }
+    }
+
 
     /*
     public function findOneBySomeField($value): ?Level

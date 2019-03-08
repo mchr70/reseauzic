@@ -44,7 +44,7 @@ class UserSearchType extends AbstractType
                  'label' => 'Genres de musique pratiqués',
                  'expanded' => true,
                  'multiple' => true,
-                 'mapped' => false,
+                 //'mapped' => false,
                  'query_builder'=>function(GenreRepository $gr){
                      return $gr->createQueryBuilder('g')->orderBy('g.name','ASC');}
                  )

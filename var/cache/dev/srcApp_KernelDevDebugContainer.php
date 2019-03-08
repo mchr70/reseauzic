@@ -16,6 +16,6 @@ if (!\class_exists(srcApp_KernelDevDebugContainer::class, false)) {
 
 return new \ContainerKFiVmLF\srcApp_KernelDevDebugContainer([
     'container.build_hash' => 'KFiVmLF',
-    'container.build_id' => '2516ac4a',
-    'container.build_time' => 1551882450,
+    'container.build_id' => 'edfb2050',
+    'container.build_time' => 1552031598,
 ], __DIR__.\DIRECTORY_SEPARATOR.'ContainerKFiVmLF');

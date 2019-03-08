@@ -47,35 +47,37 @@ class HomepageController extends Controller {
         $form->handleRequest($request);
 
         $selUsers = "";
+        $instIds = array();
+        $genresIds = array();
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $instIds = array();
+            
             foreach($search->getInstruments() as $instrument){
                 $instIds[] = $instrument->getId();
             }
-            $genresIds = array();
             foreach($search->getGenres() as $genre){
                 $genresIds[] = $genre->getId();
             }
              
-
             $em = $this->getDoctrine()->getManager();
 
-            $RAW_QUERY = 'SELECT *
-                          FROM user u 
-                          INNER JOIN user_instrument ui 
-                            ON ui.user_id = u.id
-                            AND ui.instrument_id IN (' . implode(',', $instIds) . ')
-                          AND u.zip_code = :zipCode';
-            
-            $statement = $em->getConnection()->prepare($RAW_QUERY);
-            $statement->bindValue('zipCode', $search->getZipCode());
-            $statement->execute();
-    
-            $selUsers = $statement->fetchAll();
-
-            dump($selUsers);
+            if(!empty($form["zipCode"]->getData()) OR !empty($instIds) OR !empty($genresIds)){
+               $selUsers = $em->getRepository(User::class)
+                                ->findByMultiple(
+                                    $instIds, 
+                                    $genresIds, 
+                                    $form["zipCode"]->getData()
+                                ); 
+                
+                if(empty($selUsers)){
+                    $this->addFlash('danger', 'Aucun membre ne correspond à votre recherche');
+                }
+            }
+            else{
+                $this->addFlash('danger', 'Veuillez remplir au moins un critère de recherche!');
+            }
+                   
         }
   
         return $this->render('homepage/search.html.twig', ['mainNavHome'=>true, 
