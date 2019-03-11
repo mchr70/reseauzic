@@ -130,7 +130,7 @@ class User implements UserInterface, \Serializable {
      */
     private $threads;
 
-        /**
+    /**
      * @ORM\OneToMany(targetEntity="App\Entity\Thread", mappedBy="userRecipient")
      */
     private $threads2;
@@ -150,7 +150,9 @@ class User implements UserInterface, \Serializable {
         // $this->salt = md5(uniqid('', true));
     }
     public function getUsername() {
-        return $this->email;
+
+        return explode('@', $this->email)[0];
+
     }
     public function getSalt() {
         // you *may* need a real salt depending on your encoder

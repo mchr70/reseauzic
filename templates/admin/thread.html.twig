@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello AdminThreadsController!{% endblock %}
+
+{% block body %}
+    {{ thread.title }}
+    {% for message in thread.messages %}
+        <p>{{ message.text }}</p>
+        <span><a href="{{ path('admin_message_delete', {"id":message.id}) }}" onclick="return confirm('Etes-vous sûr(e) de vouloir supprimer ce message?')">supprimer</a></span>
+    {% endfor %}
+{% endblock %}

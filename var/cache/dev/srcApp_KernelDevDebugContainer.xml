@@ -396,6 +396,20 @@
     <service id="EasyCorp\EasyLog\EasyLogHandler" class="EasyCorp\EasyLog\EasyLogHandler" public="false">
       <argument>C:\laragon\www\reseauzic\var\log/dev.log</argument>
     </service>
+    <service id="App\Controller\Admin\AdminMemberController" class="App\Controller\Admin\AdminMemberController" public="true" autowire="true" autoconfigure="true">
+      <tag name="controller.service_arguments"/>
+      <tag name="container.service_subscriber"/>
+      <call method="setContainer">
+        <argument type="service" id=".service_locator.KTVqfp6.App\Controller\Admin\AdminMemberController"/>
+      </call>
+    </service>
+    <service id="App\Controller\Admin\AdminThreadsController" class="App\Controller\Admin\AdminThreadsController" public="true" autowire="true" autoconfigure="true">
+      <tag name="controller.service_arguments"/>
+      <tag name="container.service_subscriber"/>
+      <call method="setContainer">
+        <argument type="service" id=".service_locator.KTVqfp6.App\Controller\Admin\AdminThreadsController"/>
+      </call>
+    </service>
     <service id="App\Controller\Admin\HomepageController" class="App\Controller\Admin\HomepageController" public="true" autowire="true" autoconfigure="true">
       <tag name="controller.service_arguments"/>
     </service>
@@ -3208,13 +3222,6 @@
     </service>
     <service id="security.access_map" class="Symfony\Component\Security\Http\AccessMap" public="false">
       <call method="add">
-        <argument type="service" id=".security.request_matcher.5dJADCx"/>
-        <argument type="collection">
-          <argument>ROLE_ADMIN</argument>
-        </argument>
-        <argument>null</argument>
-      </call>
-      <call method="add">
         <argument type="service" id=".security.request_matcher.NDUbcWM"/>
         <argument type="collection">
           <argument>ROLE_USER</argument>
@@ -3699,9 +3706,6 @@
       <argument type="collection">
         <argument key="security.firewall.map.context.main" type="service" id="security.firewall.map.context.main"/>
       </argument>
-    </service>
-    <service id=".security.request_matcher.5dJADCx" class="Symfony\Component\HttpFoundation\RequestMatcher" public="false">
-      <argument>^/admin</argument>
     </service>
     <service id=".security.request_matcher.NDUbcWM" class="Symfony\Component\HttpFoundation\RequestMatcher" public="false">
       <argument>^/member</argument>
@@ -4486,6 +4490,12 @@
         </argument>
       </call>
     </service>
+    <service id=".instanceof.Symfony\Contracts\Service\ServiceSubscriberInterface.0.App\Controller\Admin\AdminMemberController" class="App\Controller\Admin\AdminMemberController" autowire="true" abstract="true"/>
+    <service id=".instanceof.Symfony\Bundle\FrameworkBundle\Controller\AbstractController.0.App\Controller\Admin\AdminMemberController" class="App\Controller\Admin\AdminMemberController" autowire="true" abstract="true"/>
+    <service id=".abstract.instanceof.App\Controller\Admin\AdminMemberController" class="App\Controller\Admin\AdminMemberController" autowire="true" autoconfigure="true" abstract="true"/>
+    <service id=".instanceof.Symfony\Contracts\Service\ServiceSubscriberInterface.0.App\Controller\Admin\AdminThreadsController" class="App\Controller\Admin\AdminThreadsController" autowire="true" abstract="true"/>
+    <service id=".instanceof.Symfony\Bundle\FrameworkBundle\Controller\AbstractController.0.App\Controller\Admin\AdminThreadsController" class="App\Controller\Admin\AdminThreadsController" autowire="true" abstract="true"/>
+    <service id=".abstract.instanceof.App\Controller\Admin\AdminThreadsController" class="App\Controller\Admin\AdminThreadsController" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Symfony\Bundle\FrameworkBundle\Controller\Controller.0.App\Controller\Admin\HomepageController" class="App\Controller\Admin\HomepageController" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Controller\Admin\HomepageController" class="App\Controller\Admin\HomepageController" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Symfony\Bundle\FrameworkBundle\Controller\Controller.0.App\Controller\HomepageController" class="App\Controller\HomepageController" autowire="true" abstract="true"/>
@@ -4697,6 +4707,18 @@
         <argument>make:migration</argument>
       </call>
     </service>
+    <service id=".service_locator.Eh5YPL1" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
+      <tag name="container.service_locator"/>
+      <argument type="collection">
+        <argument key="repo" type="service" id="App\Repository\UserRepository"/>
+      </argument>
+    </service>
+    <service id=".service_locator.K3nSnKs" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
+      <tag name="container.service_locator"/>
+      <argument type="collection">
+        <argument key="repo" type="service" id="App\Repository\ThreadRepository"/>
+      </argument>
+    </service>
     <service id=".service_locator.Txvqv4R" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
       <tag name="container.service_locator"/>
       <argument type="collection">
@@ -4715,13 +4737,17 @@
         <argument key="authenticationUtils" type="service" id="security.authentication_utils"/>
       </argument>
     </service>
-    <service id=".service_locator.j0_ZpIc" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
+    <service id=".service_locator.8dtCg8G" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
       <tag name="container.service_locator"/>
       <argument type="collection">
+        <argument key="App\Controller\Admin\AdminMemberController::showMembers" type="service" id=".service_locator.Eh5YPL1"/>
+        <argument key="App\Controller\Admin\AdminThreadsController::showThreads" type="service" id=".service_locator.K3nSnKs"/>
         <argument key="App\Controller\HomepageController::index" type="service" id=".service_locator.Txvqv4R"/>
         <argument key="App\Controller\HomepageController::searchMember" type="service" id=".service_locator.Txvqv4R"/>
         <argument key="App\Controller\RegistrationController::registerAction" type="service" id=".service_locator.lm3AYgL"/>
         <argument key="App\Controller\SecurityController::login" type="service" id=".service_locator.EbLunuf"/>
+        <argument key="App\Controller\Admin\AdminMemberController:showMembers" type="service" id=".service_locator.Eh5YPL1"/>
+        <argument key="App\Controller\Admin\AdminThreadsController:showThreads" type="service" id=".service_locator.K3nSnKs"/>
         <argument key="App\Controller\HomepageController:index" type="service" id=".service_locator.Txvqv4R"/>
         <argument key="App\Controller\HomepageController:searchMember" type="service" id=".service_locator.Txvqv4R"/>
         <argument key="App\Controller\RegistrationController:registerAction" type="service" id=".service_locator.lm3AYgL"/>
@@ -4975,6 +5001,35 @@
         <argument key="security.token_storage" type="service" id="security.token_storage"/>
       </argument>
     </service>
+    <service id=".service_locator.KTVqfp6" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
+      <tag name="container.service_locator"/>
+      <argument type="collection">
+        <argument key="doctrine" type="service" id="doctrine" on-invalid="ignore"/>
+        <argument key="form.factory" type="service" id="form.factory" on-invalid="ignore"/>
+        <argument key="http_kernel" type="service" id="http_kernel" on-invalid="ignore"/>
+        <argument key="parameter_bag" type="service" id="parameter_bag" on-invalid="ignore"/>
+        <argument key="request_stack" type="service" id="request_stack" on-invalid="ignore"/>
+        <argument key="router" type="service" id="router.default" on-invalid="ignore"/>
+        <argument key="security.authorization_checker" type="service" id="security.authorization_checker" on-invalid="ignore"/>
+        <argument key="security.csrf.token_manager" type="service" id="security.csrf.token_manager" on-invalid="ignore"/>
+        <argument key="security.token_storage" type="service" id="security.token_storage" on-invalid="ignore"/>
+        <argument key="serializer" type="service" id="serializer" on-invalid="ignore"/>
+        <argument key="session" type="service" id="session" on-invalid="ignore"/>
+        <argument key="twig" type="service" id="twig" on-invalid="ignore"/>
+      </argument>
+    </service>
+    <service id=".service_locator.KTVqfp6.App\Controller\Admin\AdminMemberController" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
+      <tag name="container.service_locator_context" id="App\Controller\Admin\AdminMemberController"/>
+      <argument>App\Controller\Admin\AdminMemberController</argument>
+      <argument type="service" id="service_container"/>
+      <factory service=".service_locator.KTVqfp6" method="withContext"/>
+    </service>
+    <service id=".service_locator.KTVqfp6.App\Controller\Admin\AdminThreadsController" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
+      <tag name="container.service_locator_context" id="App\Controller\Admin\AdminThreadsController"/>
+      <argument>App\Controller\Admin\AdminThreadsController</argument>
+      <argument type="service" id="service_container"/>
+      <factory service=".service_locator.KTVqfp6" method="withContext"/>
+    </service>
     <service id=".service_locator._pu.0Tb" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
       <tag name="container.service_locator"/>
       <argument type="collection">
@@ -5067,7 +5122,7 @@
       <argument type="service" id="security.token_storage"/>
     </service>
     <service id="debug.argument_resolver.service.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\ServiceValueResolver" public="false">
-      <argument type="service" id=".service_locator.j0_ZpIc"/>
+      <argument type="service" id=".service_locator.8dtCg8G"/>
     </service>
     <service id="debug.argument_resolver.default.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\DefaultValueResolver" public="false"/>
     <service id="debug.argument_resolver.variadic.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\VariadicValueResolver" public="false"/>
@@ -5412,7 +5467,7 @@
     <service id="Twig\Environment" alias="twig" public="false"/>
     <service id="logger" alias="monolog.logger"/>
     <service id="Psr\Log\LoggerInterface" alias="monolog.logger" public="false"/>
-    <service id="argument_resolver.controller_locator" alias=".service_locator.j0_ZpIc"/>
+    <service id="argument_resolver.controller_locator" alias=".service_locator.8dtCg8G"/>
     <service id="twig.loader.filesystem" alias="twig.loader.native_filesystem" public="false"/>
     <service id="twig.loader" alias="twig.loader.native_filesystem"/>
     <service id="validator" alias="debug.validator" public="true"/>

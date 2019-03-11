@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello AdminThreadsController!{% endblock %}
+
+{% block body %}
+    {% for thread in threads %}
+        <a href="{{ path('admin_thread', {"id":thread.id}) }}">{{ thread.title }}</a>
+        <span><a href="{{ path('admin_thread_delete', {"id":thread.id}) }}" onclick="return confirm('Etes-vous sûr(e) de vouloir supprimer ce fil?')">supprimer</a></span>
+    {% endfor %}
+{% endblock %}
