@@ -21,6 +21,8 @@ class srcApp_KernelDevDebugContainerUrlGenerator extends Symfony\Component\Routi
         if (null === self::$declaredRoutes) {
             self::$declaredRoutes = [
         'admin_members' => [[], ['_controller' => 'App\\Controller\\Admin\\AdminMemberController::showMembers'], [], [['text', '/admin/members']], [], []],
+        'admin_member' => [['id'], ['_controller' => 'App\\Controller\\Admin\\AdminMemberController::showMember'], [], [['variable', '/', '[^/]++', 'id', true], ['text', '/admin/member']], [], []],
+        'admin_member_delete' => [['id'], ['_controller' => 'App\\Controller\\Admin\\AdminMemberController::deleteMember'], [], [['variable', '/', '[^/]++', 'id', true], ['text', '/admin/deletemember']], [], []],
         'admin_threads' => [[], ['_controller' => 'App\\Controller\\Admin\\AdminThreadsController::showThreads'], [], [['text', '/admin/threads']], [], []],
         'admin_thread' => [['id'], ['_controller' => 'App\\Controller\\Admin\\AdminThreadsController::showThread'], [], [['variable', '/', '[^/]++', 'id', true], ['text', '/admin/thread']], [], []],
         'admin_thread_delete' => [['id'], ['_controller' => 'App\\Controller\\Admin\\AdminThreadsController::deleteThread'], [], [['variable', '/', '[^/]++', 'id', true], ['text', '/adminthreaddelete']], [], []],

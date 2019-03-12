@@ -62,11 +62,17 @@ class AdminThreadsController extends AbstractController
                      ->getRepository(Message::class)
                      ->find($id);
 
+        $thread = $message->getThread();
+
         $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->remove($message); 
+        $entityManager->remove($message);
+        dump(count($thread->getMessages()));
+        if(count($thread->getMessages()) == 1){
+            $entityManager->remove($thread);
+        } 
         $entityManager->flush();
 
-        return $this->redirectToRoute('admin_thread');
+        return $this->redirectToRoute('admin_thread', ['id' => $id]);
 
     }
 }

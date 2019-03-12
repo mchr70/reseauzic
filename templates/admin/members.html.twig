@@ -4,6 +4,6 @@
 
 {% block body %}
     {% for user in users %}
-        <p>{{ user.email }}</p>
+        <p><a href="{{ path('admin_member', {"id":user.id}) }}">{{ user.username }}</a> <a href="{{ path('admin_member_delete', {"id":user.id}) }}"  onclick="return confirm('Etes-vous sûr(e) de vouloir supprimer cet utilisateur?')">supprimer</a></p>
     {% endfor %}
 {% endblock %}
