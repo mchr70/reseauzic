@@ -66,7 +66,7 @@ class AdminThreadsController extends AbstractController
 
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->remove($message);
-        dump(count($thread->getMessages()));
+
         if(count($thread->getMessages()) == 1){
             $entityManager->remove($thread);
         } 

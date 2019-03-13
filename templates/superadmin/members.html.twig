@@ -1,0 +1,9 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello AdminMemberController!{% endblock %}
+
+{% block body %}
+    {% for user in users %}
+        <p><a href="{{ path('superadmin_member', {"id":user.id}) }}">{{ user.username }}</a> <a href="{{ path('superadmin_member_delete', {"id":user.id}) }}"  onclick="return confirm('Etes-vous sûr(e) de vouloir supprimer cet utilisateur?')">supprimer</a></p>
+    {% endfor %}
+{% endblock %}

@@ -9,10 +9,13 @@ use Symfony\Component\Routing\Annotation\Route;
 class HomepageController extends Controller {
 
     /**
-     * @Route("/")
+     * @Route("/", name="admin_home")
      */
     public function index() {
-        return $this->render('admin/homepage/index.html.twig', ['mainNavAdmin' => true, 'title' => 'Espace Admin']);
+        return $this->render('admin/index.html.twig', [
+                'mainNavAdmin' => true, 
+                'title' => 'Espace Admin'
+            ]);
     }
 
 }

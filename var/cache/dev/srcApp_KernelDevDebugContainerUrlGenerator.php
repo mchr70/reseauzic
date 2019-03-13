@@ -20,14 +20,11 @@ class srcApp_KernelDevDebugContainerUrlGenerator extends Symfony\Component\Routi
         $this->defaultLocale = $defaultLocale;
         if (null === self::$declaredRoutes) {
             self::$declaredRoutes = [
-        'admin_members' => [[], ['_controller' => 'App\\Controller\\Admin\\AdminMemberController::showMembers'], [], [['text', '/admin/members']], [], []],
-        'admin_member' => [['id'], ['_controller' => 'App\\Controller\\Admin\\AdminMemberController::showMember'], [], [['variable', '/', '[^/]++', 'id', true], ['text', '/admin/member']], [], []],
-        'admin_member_delete' => [['id'], ['_controller' => 'App\\Controller\\Admin\\AdminMemberController::deleteMember'], [], [['variable', '/', '[^/]++', 'id', true], ['text', '/admin/deletemember']], [], []],
         'admin_threads' => [[], ['_controller' => 'App\\Controller\\Admin\\AdminThreadsController::showThreads'], [], [['text', '/admin/threads']], [], []],
         'admin_thread' => [['id'], ['_controller' => 'App\\Controller\\Admin\\AdminThreadsController::showThread'], [], [['variable', '/', '[^/]++', 'id', true], ['text', '/admin/thread']], [], []],
         'admin_thread_delete' => [['id'], ['_controller' => 'App\\Controller\\Admin\\AdminThreadsController::deleteThread'], [], [['variable', '/', '[^/]++', 'id', true], ['text', '/adminthreaddelete']], [], []],
         'admin_message_delete' => [['id'], ['_controller' => 'App\\Controller\\Admin\\AdminThreadsController::deleteMessage'], [], [['variable', '/', '[^/]++', 'id', true], ['text', '/adminmessagedelete']], [], []],
-        'app_admin_homepage_index' => [[], ['_controller' => 'App\\Controller\\Admin\\HomepageController::index'], [], [['text', '/admin/']], [], []],
+        'admin_home' => [[], ['_controller' => 'App\\Controller\\Admin\\HomepageController::index'], [], [['text', '/admin/']], [], []],
         'app_homepage_index' => [[], ['_controller' => 'App\\Controller\\HomepageController::index'], [], [['text', '/']], [], []],
         'member_search' => [[], ['_controller' => 'App\\Controller\\HomepageController::searchMember'], [], [['text', '/search']], [], []],
         'member_profile' => [['id'], ['_controller' => 'App\\Controller\\HomepageController::showMemberProfile'], [], [['variable', '/', '[^/]++', 'id', true], ['text', '/profile']], [], []],
@@ -39,6 +36,9 @@ class srcApp_KernelDevDebugContainerUrlGenerator extends Symfony\Component\Routi
         'thread_delete' => [['id'], ['_controller' => 'App\\Controller\\MemberController::deleteThread'], [], [['variable', '/', '[^/]++', 'id', true], ['text', '/member/threaddelete']], [], []],
         'app_registration_register' => [[], ['_controller' => 'App\\Controller\\RegistrationController::registerAction'], [], [['text', '/register']], [], []],
         'login' => [[], ['_controller' => 'App\\Controller\\SecurityController::login'], [], [['text', '/login']], [], []],
+        'superadmin_members' => [[], ['_controller' => 'App\\Controller\\Superadmin\\SuperadminMemberController::showMembers'], [], [['text', '/superadmin/members']], [], []],
+        'superadmin_member' => [['id'], ['_controller' => 'App\\Controller\\Superadmin\\SuperadminMemberController::showMember'], [], [['variable', '/', '[^/]++', 'id', true], ['text', '/superadmin/member']], [], []],
+        'superadmin_member_delete' => [['id'], ['_controller' => 'App\\Controller\\Superadmin\\SuperadminMemberController::deleteMember'], [], [['variable', '/', '[^/]++', 'id', true], ['text', '/superadmin/deletemember']], [], []],
         '_twig_error_test' => [['code', '_format'], ['_controller' => 'twig.controller.preview_error::previewErrorPageAction', '_format' => 'html'], ['code' => '\\d+'], [['variable', '.', '[^/]++', '_format', true], ['variable', '/', '\\d+', 'code', true], ['text', '/_error']], [], []],
         '_wdt' => [['token'], ['_controller' => 'web_profiler.controller.profiler::toolbarAction'], [], [['variable', '/', '[^/]++', 'token', true], ['text', '/_wdt']], [], []],
         '_profiler_home' => [[], ['_controller' => 'web_profiler.controller.profiler::homeAction'], [], [['text', '/_profiler/']], [], []],

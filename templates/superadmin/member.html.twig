@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello Admin Controller!{% endblock %}
+
+{% block body %}
+    <h3>{{ user.username }}</h3>
+    {{ form(form) }}
+{#}
+    <p>Code postal: {{ app.user.zipCode }}</p>
+    <p>Ville: {{ app.user.city }}</p>
+    <p>Adresse: {{ app.user.address }}</p>
+    <p>Téléphone: {{ app.user.phone }}</p>
+    <p>Description: {{ app.user.about }}</p>
+    <p>Influences: {{ app.user.influences }}</p>
+    <p>Matériel: {{ app.user.material }}</p>
+    <p>Genres de musique:</p>
+    {% for genre in app.user.genres %}
+        <li>{{ genre.name }}</li>
+    {% endfor %}
+    <p>Instruments pratiqués: </p>
+    {% for uil in app.user.userInstrumentLevels %}
+         <li>{{ uil.instrument.name }}, niveau {{ uil.level.name }}</li>
+    {% endfor %} #}
+{% endblock %}
