@@ -47,21 +47,25 @@ class srcApp_KernelDevDebugContainerUrlMatcher extends Symfony\Bundle\FrameworkB
                     .')'
                     .'|/superadmin/(?'
                         .'|member/([^/]++)(*:233)'
-                        .'|deletemember/([^/]++)(*:262)'
+                        .'|togglemember/([^/]++)(*:262)'
+                        .'|set(?'
+                            .'|admin/([^/]++)(*:290)'
+                            .'|user/([^/]++)(*:311)'
+                        .')'
                     .')'
                     .'|/_(?'
-                        .'|error/(\\d+)(?:\\.([^/]++))?(*:302)'
-                        .'|wdt/([^/]++)(*:322)'
+                        .'|error/(\\d+)(?:\\.([^/]++))?(*:352)'
+                        .'|wdt/([^/]++)(*:372)'
                         .'|profiler/([^/]++)(?'
                             .'|/(?'
-                                .'|search/results(*:368)'
-                                .'|router(*:382)'
+                                .'|search/results(*:418)'
+                                .'|router(*:432)'
                                 .'|exception(?'
-                                    .'|(*:402)'
-                                    .'|\\.css(*:415)'
+                                    .'|(*:452)'
+                                    .'|\\.css(*:465)'
                                 .')'
                             .')'
-                            .'|(*:425)'
+                            .'|(*:475)'
                         .')'
                     .')'
                 .')/?$}sDu',
@@ -75,14 +79,16 @@ class srcApp_KernelDevDebugContainerUrlMatcher extends Symfony\Bundle\FrameworkB
             171 => [[['_route' => 'thread_editor', '_controller' => 'App\\Controller\\MemberController::startThread'], ['recipientId'], null, null, false, true, null]],
             194 => [[['_route' => 'thread_delete', '_controller' => 'App\\Controller\\MemberController::deleteThread'], ['id'], null, null, false, true, null]],
             233 => [[['_route' => 'superadmin_member', '_controller' => 'App\\Controller\\Superadmin\\SuperadminMemberController::showMember'], ['id'], null, null, false, true, null]],
-            262 => [[['_route' => 'superadmin_member_delete', '_controller' => 'App\\Controller\\Superadmin\\SuperadminMemberController::deleteMember'], ['id'], null, null, false, true, null]],
-            302 => [[['_route' => '_twig_error_test', '_controller' => 'twig.controller.preview_error::previewErrorPageAction', '_format' => 'html'], ['code', '_format'], null, null, false, true, null]],
-            322 => [[['_route' => '_wdt', '_controller' => 'web_profiler.controller.profiler::toolbarAction'], ['token'], null, null, false, true, null]],
-            368 => [[['_route' => '_profiler_search_results', '_controller' => 'web_profiler.controller.profiler::searchResultsAction'], ['token'], null, null, false, false, null]],
-            382 => [[['_route' => '_profiler_router', '_controller' => 'web_profiler.controller.router::panelAction'], ['token'], null, null, false, false, null]],
-            402 => [[['_route' => '_profiler_exception', '_controller' => 'web_profiler.controller.exception::showAction'], ['token'], null, null, false, false, null]],
-            415 => [[['_route' => '_profiler_exception_css', '_controller' => 'web_profiler.controller.exception::cssAction'], ['token'], null, null, false, false, null]],
-            425 => [[['_route' => '_profiler', '_controller' => 'web_profiler.controller.profiler::panelAction'], ['token'], null, null, false, true, null]],
+            262 => [[['_route' => 'superadmin_member_toggle', '_controller' => 'App\\Controller\\Superadmin\\SuperadminMemberController::deleteMember'], ['id'], null, null, false, true, null]],
+            290 => [[['_route' => 'superadmin_setadmin', '_controller' => 'App\\Controller\\Superadmin\\SuperadminMemberController::setAdmin'], ['id'], null, null, false, true, null]],
+            311 => [[['_route' => 'superadmin_setuser', '_controller' => 'App\\Controller\\Superadmin\\SuperadminMemberController::setUser'], ['id'], null, null, false, true, null]],
+            352 => [[['_route' => '_twig_error_test', '_controller' => 'twig.controller.preview_error::previewErrorPageAction', '_format' => 'html'], ['code', '_format'], null, null, false, true, null]],
+            372 => [[['_route' => '_wdt', '_controller' => 'web_profiler.controller.profiler::toolbarAction'], ['token'], null, null, false, true, null]],
+            418 => [[['_route' => '_profiler_search_results', '_controller' => 'web_profiler.controller.profiler::searchResultsAction'], ['token'], null, null, false, false, null]],
+            432 => [[['_route' => '_profiler_router', '_controller' => 'web_profiler.controller.router::panelAction'], ['token'], null, null, false, false, null]],
+            452 => [[['_route' => '_profiler_exception', '_controller' => 'web_profiler.controller.exception::showAction'], ['token'], null, null, false, false, null]],
+            465 => [[['_route' => '_profiler_exception_css', '_controller' => 'web_profiler.controller.exception::cssAction'], ['token'], null, null, false, false, null]],
+            475 => [[['_route' => '_profiler', '_controller' => 'web_profiler.controller.profiler::panelAction'], ['token'], null, null, false, true, null]],
         ];
     }
 }

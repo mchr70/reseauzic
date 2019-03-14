@@ -55,7 +55,7 @@ class SuperadminMemberController extends AbstractController
     }
 
     /**
-     * @Route("/deletemember/{id}", name="superadmin_member_delete")
+     * @Route("/togglemember/{id}", name="superadmin_member_toggle")
      */
     public function deleteMember($id)
     {
@@ -64,9 +64,68 @@ class SuperadminMemberController extends AbstractController
                      ->find($id);
 
         $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->remove($user);
+        
+        if($user->getIsActive()){
+            $user->setIsActive(false);
+            $this->addFlash('warning', 'Cet utilisateur a reçu un ban et n\'est plus actif');
+        }
+        else{
+            $user->setIsActive(true);
+            $this->addFlash('success', 'Cet utilisateur est à nouveau actif');
+        }
+
         $entityManager->flush();
 
-        return $this->redirectToRoute('admin_members');
+        return $this->redirectToRoute('superadmin_members');
+    }
+
+    /**
+     * @Route("/setadmin/{id}", name="superadmin_setadmin")
+     */
+    public function setAdmin($id, UserRepository $repo)
+    {
+        $user = $this->getDoctrine()
+                     ->getRepository(User::class)
+                     ->find($id);
+
+        $entityManager = $this->getDoctrine()->getManager();
+ 
+        $user->addRole('ROLE_ADMIN');
+        // $user->addRole('ROLE_ADMIN');
+        // $user->setRoles([]);
+dump($user->getRoles());
+        $entityManager->persist($user);
+        $entityManager->flush();
+
+        // return $this->redirectToRoute('superadmin_members');
+        return $this->render('superadmin/members.html.twig', [
+            'controller_name' => 'AdminMemberController',
+            'users' => $repo->findAll(),
+            'title' => 'Gestion des membres'
+            ]);
+    }
+
+    /**
+     * @Route("/setuser/{id}", name="superadmin_setuser")
+     */
+    public function setUser($id, UserRepository $repo)
+    {
+        $user = $this->getDoctrine()
+                     ->getRepository(User::class)
+                     ->find($id);
+
+        $entityManager = $this->getDoctrine()->getManager();
+  
+        $user->setRoles([]);
+dump($user->getRoles());
+        $entityManager->persist($user);
+        $entityManager->flush();
+
+        // return $this->redirectToRoute('superadmin_members');
+        return $this->render('superadmin/members.html.twig', [
+            'controller_name' => 'AdminMemberController',
+            'users' => $repo->findAll(),
+            'title' => 'Gestion des membres'
+            ]);
     }
 }

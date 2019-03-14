@@ -4,6 +4,24 @@
 
 {% block body %}
     {% for user in users %}
-        <p><a href="{{ path('superadmin_member', {"id":user.id}) }}">{{ user.username }}</a> <a href="{{ path('superadmin_member_delete', {"id":user.id}) }}"  onclick="return confirm('Etes-vous sûr(e) de vouloir supprimer cet utilisateur?')">supprimer</a></p>
+        <p><a href="{{ path('superadmin_member', {"id":user.id}) }}">{{ user.username }}</a> 
+        {% for role in user.roles %}
+            {% if role == 'ROLE_USER' %}
+                <a href="{{ path('superadmin_setadmin', {"id":user.id}) }}"  onclick="return confirm('Etes-vous sûr(e) de vouloir changer le rôle de cet utilisateur?')">faire admin</a> 
+            {% elseif role == 'ROLE_SUPER_ADMIN' %}
+                <div>Vous êtes super admin</div>
+            {% else %}
+                <a href="{{ path('superadmin_setuser', {"id":user.id}) }}"  onclick="return confirm('Etes-vous sûr(e) de vouloir changer le rôle de cet utilisateur?')">faire user</a> 
+            {% endif %}
+        {% endfor %}
+        {% for role in user.roles%}
+            {% if role == 'ROLE_USER' or role == 'ROLE_ADMIN' %}
+                {% if user.isActive %}
+                    <a href="{{ path('superadmin_member_toggle', {"id":user.id}) }}"  onclick="return confirm('Etes-vous sûr(e) de vouloir bannir cet utilisateur?')">bannir</a></p>
+                {% else %}
+                    <a href="{{ path('superadmin_member_toggle', {"id":user.id}) }}"  onclick="return confirm('Etes-vous sûr(e) de vouloir annuler le ban de cet utilisateur?')">enlever le ban</a>
+                {% endif %}
+            {% endif %}
+        {% endfor %}
     {% endfor %}
 {% endblock %}

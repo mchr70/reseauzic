@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -17,6 +18,11 @@ class Photo
     private $id;
 
     /**
+     * @Assert\File(
+     *      maxSize = "1M",
+     *      mimeTypes = {"image/jpeg", "image/png"},
+     *      mimeTypesMessage = "Uniquement les images en format jpg ou png sont autorisées"
+     * )
      * @ORM\Column(type="string", length=255)
      */
     private $src;
