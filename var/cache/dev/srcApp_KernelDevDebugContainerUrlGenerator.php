@@ -36,6 +36,8 @@ class srcApp_KernelDevDebugContainerUrlGenerator extends Symfony\Component\Routi
         'thread_delete' => [['id'], ['_controller' => 'App\\Controller\\MemberController::deleteThread'], [], [['variable', '/', '[^/]++', 'id', true], ['text', '/member/threaddelete']], [], []],
         'app_registration_register' => [[], ['_controller' => 'App\\Controller\\RegistrationController::registerAction'], [], [['text', '/register']], [], []],
         'login' => [[], ['_controller' => 'App\\Controller\\SecurityController::login'], [], [['text', '/login']], [], []],
+        'forgotten_password' => [[], ['_controller' => 'App\\Controller\\SecurityController::forgottenPassword'], [], [['text', '/forgotten_password']], [], []],
+        'reset_password' => [['token'], ['_controller' => 'App\\Controller\\SecurityController::resetPassword'], [], [['variable', '/', '[^/]++', 'token', true], ['text', '/reset_password']], [], []],
         'superadmin_members' => [[], ['_controller' => 'App\\Controller\\Superadmin\\SuperadminMemberController::showMembers'], [], [['text', '/superadmin/members']], [], []],
         'superadmin_member' => [['id'], ['_controller' => 'App\\Controller\\Superadmin\\SuperadminMemberController::showMember'], [], [['variable', '/', '[^/]++', 'id', true], ['text', '/superadmin/member']], [], []],
         'superadmin_member_toggle' => [['id'], ['_controller' => 'App\\Controller\\Superadmin\\SuperadminMemberController::deleteMember'], [], [['variable', '/', '[^/]++', 'id', true], ['text', '/superadmin/togglemember']], [], []],

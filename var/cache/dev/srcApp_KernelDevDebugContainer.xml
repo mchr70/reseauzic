@@ -1159,7 +1159,7 @@
       <argument type="service" id=".1_PhpArrayAdapter~PWq4hjl"/>
     </service>
     <service id="validator.validator_factory" class="Symfony\Component\Validator\ContainerConstraintValidatorFactory" public="false">
-      <argument type="service" id=".service_locator.HKoUR8q"/>
+      <argument type="service" id=".service_locator.37xBtZ2"/>
     </service>
     <service id="validator.expression" class="Symfony\Component\Validator\Constraints\ExpressionValidator" public="false">
       <tag name="validator.constraint_validator" alias="validator.expression"/>
@@ -4755,20 +4755,30 @@
         <argument key="authenticationUtils" type="service" id="security.authentication_utils"/>
       </argument>
     </service>
+    <service id=".service_locator.rUpeG.j" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
+      <tag name="container.service_locator"/>
+      <argument type="collection">
+        <argument key="encoder" type="service" id="security.user_password_encoder.generic"/>
+        <argument key="mailer" type="service" id="swiftmailer.mailer.default"/>
+        <argument key="tokenGenerator" type="service" id="security.csrf.token_generator"/>
+      </argument>
+    </service>
     <service id=".service_locator.Eh5YPL1" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
       <tag name="container.service_locator"/>
       <argument type="collection">
         <argument key="repo" type="service" id="App\Repository\UserRepository"/>
       </argument>
     </service>
-    <service id=".service_locator.xkNBvWs" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
+    <service id=".service_locator.A.fayAm" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
       <tag name="container.service_locator"/>
       <argument type="collection">
         <argument key="App\Controller\Admin\AdminThreadsController::showThreads" type="service" id=".service_locator.K3nSnKs"/>
         <argument key="App\Controller\HomepageController::index" type="service" id=".service_locator.Txvqv4R"/>
         <argument key="App\Controller\HomepageController::searchMember" type="service" id=".service_locator.Txvqv4R"/>
         <argument key="App\Controller\RegistrationController::registerAction" type="service" id=".service_locator.lm3AYgL"/>
+        <argument key="App\Controller\SecurityController::forgottenPassword" type="service" id=".service_locator.rUpeG.j"/>
         <argument key="App\Controller\SecurityController::login" type="service" id=".service_locator.EbLunuf"/>
+        <argument key="App\Controller\SecurityController::resetPassword" type="service" id=".service_locator.lm3AYgL"/>
         <argument key="App\Controller\Superadmin\SuperadminMemberController::setAdmin" type="service" id=".service_locator.Eh5YPL1"/>
         <argument key="App\Controller\Superadmin\SuperadminMemberController::setUser" type="service" id=".service_locator.Eh5YPL1"/>
         <argument key="App\Controller\Superadmin\SuperadminMemberController::showMembers" type="service" id=".service_locator.Eh5YPL1"/>
@@ -4776,10 +4786,24 @@
         <argument key="App\Controller\HomepageController:index" type="service" id=".service_locator.Txvqv4R"/>
         <argument key="App\Controller\HomepageController:searchMember" type="service" id=".service_locator.Txvqv4R"/>
         <argument key="App\Controller\RegistrationController:registerAction" type="service" id=".service_locator.lm3AYgL"/>
+        <argument key="App\Controller\SecurityController:forgottenPassword" type="service" id=".service_locator.rUpeG.j"/>
         <argument key="App\Controller\SecurityController:login" type="service" id=".service_locator.EbLunuf"/>
+        <argument key="App\Controller\SecurityController:resetPassword" type="service" id=".service_locator.lm3AYgL"/>
         <argument key="App\Controller\Superadmin\SuperadminMemberController:setAdmin" type="service" id=".service_locator.Eh5YPL1"/>
         <argument key="App\Controller\Superadmin\SuperadminMemberController:setUser" type="service" id=".service_locator.Eh5YPL1"/>
         <argument key="App\Controller\Superadmin\SuperadminMemberController:showMembers" type="service" id=".service_locator.Eh5YPL1"/>
+      </argument>
+    </service>
+    <service id=".service_locator.37xBtZ2" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
+      <tag name="container.service_locator"/>
+      <argument type="collection">
+        <argument key="Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntityValidator" type="service" id="doctrine.orm.validator.unique"/>
+        <argument key="Symfony\Component\Security\Core\Validator\Constraints\UserPasswordValidator" type="service" id="security.validator.user_password"/>
+        <argument key="Symfony\Component\Validator\Constraints\EmailValidator" type="service" id="validator.email"/>
+        <argument key="Symfony\Component\Validator\Constraints\ExpressionValidator" type="service" id="validator.expression"/>
+        <argument key="doctrine.orm.validator.unique" type="service" id="doctrine.orm.validator.unique"/>
+        <argument key="security.validator.user_password" type="service" id="security.validator.user_password"/>
+        <argument key="validator.expression" type="service" id="validator.expression"/>
       </argument>
     </service>
     <service id=".service_locator.yQVjGlt" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
@@ -5150,22 +5174,10 @@
       <argument type="service" id="security.token_storage"/>
     </service>
     <service id="debug.argument_resolver.service.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\ServiceValueResolver" public="false">
-      <argument type="service" id=".service_locator.xkNBvWs"/>
+      <argument type="service" id=".service_locator.A.fayAm"/>
     </service>
     <service id="debug.argument_resolver.default.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\DefaultValueResolver" public="false"/>
     <service id="debug.argument_resolver.variadic.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\VariadicValueResolver" public="false"/>
-    <service id=".service_locator.HKoUR8q" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
-      <tag name="container.service_locator"/>
-      <argument type="collection">
-        <argument key="Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntityValidator" type="service" id="doctrine.orm.validator.unique"/>
-        <argument key="Symfony\Component\Security\Core\Validator\Constraints\UserPasswordValidator" type="service" id="security.validator.user_password"/>
-        <argument key="Symfony\Component\Validator\Constraints\EmailValidator" type="service" id="validator.email"/>
-        <argument key="Symfony\Component\Validator\Constraints\ExpressionValidator" type="service" id="validator.expression"/>
-        <argument key="doctrine.orm.validator.unique" type="service" id="doctrine.orm.validator.unique"/>
-        <argument key="security.validator.user_password" type="service" id="security.validator.user_password"/>
-        <argument key="validator.expression" type="service" id="validator.expression"/>
-      </argument>
-    </service>
     <service id="console.command_loader" class="Symfony\Component\Console\CommandLoader\ContainerCommandLoader" public="true">
       <argument type="service" id=".service_locator.KwgMclN"/>
       <argument type="collection">
@@ -5495,7 +5507,7 @@
     <service id="Twig\Environment" alias="twig" public="false"/>
     <service id="logger" alias="monolog.logger"/>
     <service id="Psr\Log\LoggerInterface" alias="monolog.logger" public="false"/>
-    <service id="argument_resolver.controller_locator" alias=".service_locator.xkNBvWs"/>
+    <service id="argument_resolver.controller_locator" alias=".service_locator.A.fayAm"/>
     <service id="twig.loader.filesystem" alias="twig.loader.native_filesystem" public="false"/>
     <service id="twig.loader" alias="twig.loader.native_filesystem"/>
     <service id="validator" alias="debug.validator" public="true"/>
