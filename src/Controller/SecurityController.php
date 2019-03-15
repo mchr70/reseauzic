@@ -77,7 +77,7 @@ class SecurityController extends Controller {
                 ->setFrom('mchr70@gmail.com')
                 ->setTo($user->getEmail())
                 ->setBody(
-                    "blablabla voici le token pour reseter votre mot de passe : " . $url,
+                    "Bonjour,\n Voici le lien qui vous permettra de définir un nouveau mot de passe sur réseauzic : " . $url,
                     'text/html'
                 );
 
@@ -85,7 +85,7 @@ class SecurityController extends Controller {
 
             $this->addFlash('notice', 'Mail envoyé');
 
-            return $this->redirectToRoute('forgotten_password');
+            // return $this->redirectToRoute('forgotten_password');
         }
 
         return $this->render('security/forgotten_password.html.twig');

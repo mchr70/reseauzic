@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello AdminRatingController!{% endblock %}
+
+{% block body %}
+    {% for rating in ratings %}
+        <p>
+            {{ rating.createdAt|date("d/m/Y à H:i", "Europe/Paris") }}
+            {{ rating.note }} / 5
+            {{ rating.comment }}
+            {{ rating.userRecipient.username }}
+            {{ rating.userSender.username }}
+            <span><a href="{{ path('admin_rating_delete', {"id":rating.id}) }}" onclick="return confirm('Etes-vous sûr(e) de vouloir supprimer cette évaluation?')">supprimer</a></span>
+        </p>
+    {% endfor %}
+{% endblock %}

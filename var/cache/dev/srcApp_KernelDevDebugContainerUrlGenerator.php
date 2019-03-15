@@ -20,6 +20,8 @@ class srcApp_KernelDevDebugContainerUrlGenerator extends Symfony\Component\Routi
         $this->defaultLocale = $defaultLocale;
         if (null === self::$declaredRoutes) {
             self::$declaredRoutes = [
+        'admin_rating' => [[], ['_controller' => 'App\\Controller\\Admin\\AdminRatingController::index'], [], [['text', '/admin/rating']], [], []],
+        'admin_rating_delete' => [['id'], ['_controller' => 'App\\Controller\\Admin\\AdminRatingController::deleteRating'], [], [['variable', '', '[^/]++', 'id', true], ['text', '/admin/delete_rating']], [], []],
         'admin_threads' => [[], ['_controller' => 'App\\Controller\\Admin\\AdminThreadsController::showThreads'], [], [['text', '/admin/threads']], [], []],
         'admin_thread' => [['id'], ['_controller' => 'App\\Controller\\Admin\\AdminThreadsController::showThread'], [], [['variable', '/', '[^/]++', 'id', true], ['text', '/admin/thread']], [], []],
         'admin_thread_delete' => [['id'], ['_controller' => 'App\\Controller\\Admin\\AdminThreadsController::deleteThread'], [], [['variable', '/', '[^/]++', 'id', true], ['text', '/adminthreaddelete']], [], []],

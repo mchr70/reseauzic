@@ -15,6 +15,7 @@ class srcApp_KernelDevDebugContainerUrlMatcher extends Symfony\Bundle\FrameworkB
     {
         $this->context = $context;
         $this->staticRoutes = [
+            '/admin/rating' => [[['_route' => 'admin_rating', '_controller' => 'App\\Controller\\Admin\\AdminRatingController::index'], null, null, null, false, false, null]],
             '/admin/threads' => [[['_route' => 'admin_threads', '_controller' => 'App\\Controller\\Admin\\AdminThreadsController::showThreads'], null, null, null, false, false, null]],
             '/admin' => [[['_route' => 'admin_home', '_controller' => 'App\\Controller\\Admin\\HomepageController::index'], null, null, null, true, false, null]],
             '/' => [[['_route' => 'app_homepage_index', '_controller' => 'App\\Controller\\HomepageController::index'], null, null, null, false, false, null]],
@@ -36,62 +37,66 @@ class srcApp_KernelDevDebugContainerUrlMatcher extends Symfony\Bundle\FrameworkB
         $this->regexpList = [
             0 => '{^(?'
                     .'|/admin(?'
-                        .'|/thread/([^/]++)(*:32)'
-                        .'|threaddelete/([^/]++)(*:60)'
-                        .'|messagedelete/([^/]++)(*:89)'
+                        .'|/(?'
+                            .'|delete_rating([^/]++)(*:41)'
+                            .'|thread/([^/]++)(*:63)'
+                        .')'
+                        .'|threaddelete/([^/]++)(*:92)'
+                        .'|messagedelete/([^/]++)(*:121)'
                     .')'
-                    .'|/profile/([^/]++)(*:114)'
+                    .'|/profile/([^/]++)(*:147)'
                     .'|/member/thread(?'
-                        .'|/([^/]++)(*:148)'
-                        .'|editor/([^/]++)(*:171)'
-                        .'|delete/([^/]++)(*:194)'
+                        .'|/([^/]++)(*:181)'
+                        .'|editor/([^/]++)(*:204)'
+                        .'|delete/([^/]++)(*:227)'
                     .')'
-                    .'|/reset_password/([^/]++)(*:227)'
+                    .'|/reset_password/([^/]++)(*:260)'
                     .'|/superadmin/(?'
-                        .'|member/([^/]++)(*:265)'
-                        .'|togglemember/([^/]++)(*:294)'
+                        .'|member/([^/]++)(*:298)'
+                        .'|togglemember/([^/]++)(*:327)'
                         .'|set(?'
-                            .'|admin/([^/]++)(*:322)'
-                            .'|user/([^/]++)(*:343)'
+                            .'|admin/([^/]++)(*:355)'
+                            .'|user/([^/]++)(*:376)'
                         .')'
                     .')'
                     .'|/_(?'
-                        .'|error/(\\d+)(?:\\.([^/]++))?(*:384)'
-                        .'|wdt/([^/]++)(*:404)'
+                        .'|error/(\\d+)(?:\\.([^/]++))?(*:417)'
+                        .'|wdt/([^/]++)(*:437)'
                         .'|profiler/([^/]++)(?'
                             .'|/(?'
-                                .'|search/results(*:450)'
-                                .'|router(*:464)'
+                                .'|search/results(*:483)'
+                                .'|router(*:497)'
                                 .'|exception(?'
-                                    .'|(*:484)'
-                                    .'|\\.css(*:497)'
+                                    .'|(*:517)'
+                                    .'|\\.css(*:530)'
                                 .')'
                             .')'
-                            .'|(*:507)'
+                            .'|(*:540)'
                         .')'
                     .')'
                 .')/?$}sDu',
         ];
         $this->dynamicRoutes = [
-            32 => [[['_route' => 'admin_thread', '_controller' => 'App\\Controller\\Admin\\AdminThreadsController::showThread'], ['id'], null, null, false, true, null]],
-            60 => [[['_route' => 'admin_thread_delete', '_controller' => 'App\\Controller\\Admin\\AdminThreadsController::deleteThread'], ['id'], null, null, false, true, null]],
-            89 => [[['_route' => 'admin_message_delete', '_controller' => 'App\\Controller\\Admin\\AdminThreadsController::deleteMessage'], ['id'], null, null, false, true, null]],
-            114 => [[['_route' => 'member_profile', '_controller' => 'App\\Controller\\HomepageController::showMemberProfile'], ['id'], null, null, false, true, null]],
-            148 => [[['_route' => 'thread', '_controller' => 'App\\Controller\\MemberController::showThread'], ['id'], null, null, false, true, null]],
-            171 => [[['_route' => 'thread_editor', '_controller' => 'App\\Controller\\MemberController::startThread'], ['recipientId'], null, null, false, true, null]],
-            194 => [[['_route' => 'thread_delete', '_controller' => 'App\\Controller\\MemberController::deleteThread'], ['id'], null, null, false, true, null]],
-            227 => [[['_route' => 'reset_password', '_controller' => 'App\\Controller\\SecurityController::resetPassword'], ['token'], null, null, false, true, null]],
-            265 => [[['_route' => 'superadmin_member', '_controller' => 'App\\Controller\\Superadmin\\SuperadminMemberController::showMember'], ['id'], null, null, false, true, null]],
-            294 => [[['_route' => 'superadmin_member_toggle', '_controller' => 'App\\Controller\\Superadmin\\SuperadminMemberController::deleteMember'], ['id'], null, null, false, true, null]],
-            322 => [[['_route' => 'superadmin_setadmin', '_controller' => 'App\\Controller\\Superadmin\\SuperadminMemberController::setAdmin'], ['id'], null, null, false, true, null]],
-            343 => [[['_route' => 'superadmin_setuser', '_controller' => 'App\\Controller\\Superadmin\\SuperadminMemberController::setUser'], ['id'], null, null, false, true, null]],
-            384 => [[['_route' => '_twig_error_test', '_controller' => 'twig.controller.preview_error::previewErrorPageAction', '_format' => 'html'], ['code', '_format'], null, null, false, true, null]],
-            404 => [[['_route' => '_wdt', '_controller' => 'web_profiler.controller.profiler::toolbarAction'], ['token'], null, null, false, true, null]],
-            450 => [[['_route' => '_profiler_search_results', '_controller' => 'web_profiler.controller.profiler::searchResultsAction'], ['token'], null, null, false, false, null]],
-            464 => [[['_route' => '_profiler_router', '_controller' => 'web_profiler.controller.router::panelAction'], ['token'], null, null, false, false, null]],
-            484 => [[['_route' => '_profiler_exception', '_controller' => 'web_profiler.controller.exception::showAction'], ['token'], null, null, false, false, null]],
-            497 => [[['_route' => '_profiler_exception_css', '_controller' => 'web_profiler.controller.exception::cssAction'], ['token'], null, null, false, false, null]],
-            507 => [[['_route' => '_profiler', '_controller' => 'web_profiler.controller.profiler::panelAction'], ['token'], null, null, false, true, null]],
+            41 => [[['_route' => 'admin_rating_delete', '_controller' => 'App\\Controller\\Admin\\AdminRatingController::deleteRating'], ['id'], null, null, false, true, null]],
+            63 => [[['_route' => 'admin_thread', '_controller' => 'App\\Controller\\Admin\\AdminThreadsController::showThread'], ['id'], null, null, false, true, null]],
+            92 => [[['_route' => 'admin_thread_delete', '_controller' => 'App\\Controller\\Admin\\AdminThreadsController::deleteThread'], ['id'], null, null, false, true, null]],
+            121 => [[['_route' => 'admin_message_delete', '_controller' => 'App\\Controller\\Admin\\AdminThreadsController::deleteMessage'], ['id'], null, null, false, true, null]],
+            147 => [[['_route' => 'member_profile', '_controller' => 'App\\Controller\\HomepageController::showMemberProfile'], ['id'], null, null, false, true, null]],
+            181 => [[['_route' => 'thread', '_controller' => 'App\\Controller\\MemberController::showThread'], ['id'], null, null, false, true, null]],
+            204 => [[['_route' => 'thread_editor', '_controller' => 'App\\Controller\\MemberController::startThread'], ['recipientId'], null, null, false, true, null]],
+            227 => [[['_route' => 'thread_delete', '_controller' => 'App\\Controller\\MemberController::deleteThread'], ['id'], null, null, false, true, null]],
+            260 => [[['_route' => 'reset_password', '_controller' => 'App\\Controller\\SecurityController::resetPassword'], ['token'], null, null, false, true, null]],
+            298 => [[['_route' => 'superadmin_member', '_controller' => 'App\\Controller\\Superadmin\\SuperadminMemberController::showMember'], ['id'], null, null, false, true, null]],
+            327 => [[['_route' => 'superadmin_member_toggle', '_controller' => 'App\\Controller\\Superadmin\\SuperadminMemberController::deleteMember'], ['id'], null, null, false, true, null]],
+            355 => [[['_route' => 'superadmin_setadmin', '_controller' => 'App\\Controller\\Superadmin\\SuperadminMemberController::setAdmin'], ['id'], null, null, false, true, null]],
+            376 => [[['_route' => 'superadmin_setuser', '_controller' => 'App\\Controller\\Superadmin\\SuperadminMemberController::setUser'], ['id'], null, null, false, true, null]],
+            417 => [[['_route' => '_twig_error_test', '_controller' => 'twig.controller.preview_error::previewErrorPageAction', '_format' => 'html'], ['code', '_format'], null, null, false, true, null]],
+            437 => [[['_route' => '_wdt', '_controller' => 'web_profiler.controller.profiler::toolbarAction'], ['token'], null, null, false, true, null]],
+            483 => [[['_route' => '_profiler_search_results', '_controller' => 'web_profiler.controller.profiler::searchResultsAction'], ['token'], null, null, false, false, null]],
+            497 => [[['_route' => '_profiler_router', '_controller' => 'web_profiler.controller.router::panelAction'], ['token'], null, null, false, false, null]],
+            517 => [[['_route' => '_profiler_exception', '_controller' => 'web_profiler.controller.exception::showAction'], ['token'], null, null, false, false, null]],
+            530 => [[['_route' => '_profiler_exception_css', '_controller' => 'web_profiler.controller.exception::cssAction'], ['token'], null, null, false, false, null]],
+            540 => [[['_route' => '_profiler', '_controller' => 'web_profiler.controller.profiler::panelAction'], ['token'], null, null, false, true, null]],
         ];
     }
 }

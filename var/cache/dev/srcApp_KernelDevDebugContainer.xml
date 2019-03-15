@@ -400,6 +400,13 @@
     <service id="EasyCorp\EasyLog\EasyLogHandler" class="EasyCorp\EasyLog\EasyLogHandler" public="false">
       <argument>C:\laragon\www\reseauzic\var\log/dev.log</argument>
     </service>
+    <service id="App\Controller\Admin\AdminRatingController" class="App\Controller\Admin\AdminRatingController" public="true" autowire="true" autoconfigure="true">
+      <tag name="controller.service_arguments"/>
+      <tag name="container.service_subscriber"/>
+      <call method="setContainer">
+        <argument type="service" id=".service_locator.KTVqfp6.App\Controller\Admin\AdminRatingController"/>
+      </call>
+    </service>
     <service id="App\Controller\Admin\AdminThreadsController" class="App\Controller\Admin\AdminThreadsController" public="true" autowire="true" autoconfigure="true">
       <tag name="controller.service_arguments"/>
       <tag name="container.service_subscriber"/>
@@ -4514,6 +4521,9 @@
         </argument>
       </call>
     </service>
+    <service id=".instanceof.Symfony\Contracts\Service\ServiceSubscriberInterface.0.App\Controller\Admin\AdminRatingController" class="App\Controller\Admin\AdminRatingController" autowire="true" abstract="true"/>
+    <service id=".instanceof.Symfony\Bundle\FrameworkBundle\Controller\AbstractController.0.App\Controller\Admin\AdminRatingController" class="App\Controller\Admin\AdminRatingController" autowire="true" abstract="true"/>
+    <service id=".abstract.instanceof.App\Controller\Admin\AdminRatingController" class="App\Controller\Admin\AdminRatingController" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Symfony\Contracts\Service\ServiceSubscriberInterface.0.App\Controller\Admin\AdminThreadsController" class="App\Controller\Admin\AdminThreadsController" autowire="true" abstract="true"/>
     <service id=".instanceof.Symfony\Bundle\FrameworkBundle\Controller\AbstractController.0.App\Controller\Admin\AdminThreadsController" class="App\Controller\Admin\AdminThreadsController" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Controller\Admin\AdminThreadsController" class="App\Controller\Admin\AdminThreadsController" autowire="true" autoconfigure="true" abstract="true"/>
@@ -4731,6 +4741,12 @@
         <argument>make:migration</argument>
       </call>
     </service>
+    <service id=".service_locator.jGlxRyg" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
+      <tag name="container.service_locator"/>
+      <argument type="collection">
+        <argument key="repo" type="service" id="App\Repository\RatingRepository"/>
+      </argument>
+    </service>
     <service id=".service_locator.K3nSnKs" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
       <tag name="container.service_locator"/>
       <argument type="collection">
@@ -4769,9 +4785,10 @@
         <argument key="repo" type="service" id="App\Repository\UserRepository"/>
       </argument>
     </service>
-    <service id=".service_locator.A.fayAm" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
+    <service id=".service_locator.8B8.euS" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
       <tag name="container.service_locator"/>
       <argument type="collection">
+        <argument key="App\Controller\Admin\AdminRatingController::index" type="service" id=".service_locator.jGlxRyg"/>
         <argument key="App\Controller\Admin\AdminThreadsController::showThreads" type="service" id=".service_locator.K3nSnKs"/>
         <argument key="App\Controller\HomepageController::index" type="service" id=".service_locator.Txvqv4R"/>
         <argument key="App\Controller\HomepageController::searchMember" type="service" id=".service_locator.Txvqv4R"/>
@@ -4782,6 +4799,7 @@
         <argument key="App\Controller\Superadmin\SuperadminMemberController::setAdmin" type="service" id=".service_locator.Eh5YPL1"/>
         <argument key="App\Controller\Superadmin\SuperadminMemberController::setUser" type="service" id=".service_locator.Eh5YPL1"/>
         <argument key="App\Controller\Superadmin\SuperadminMemberController::showMembers" type="service" id=".service_locator.Eh5YPL1"/>
+        <argument key="App\Controller\Admin\AdminRatingController:index" type="service" id=".service_locator.jGlxRyg"/>
         <argument key="App\Controller\Admin\AdminThreadsController:showThreads" type="service" id=".service_locator.K3nSnKs"/>
         <argument key="App\Controller\HomepageController:index" type="service" id=".service_locator.Txvqv4R"/>
         <argument key="App\Controller\HomepageController:searchMember" type="service" id=".service_locator.Txvqv4R"/>
@@ -5070,6 +5088,12 @@
         <argument key="twig" type="service" id="twig" on-invalid="ignore"/>
       </argument>
     </service>
+    <service id=".service_locator.KTVqfp6.App\Controller\Admin\AdminRatingController" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
+      <tag name="container.service_locator_context" id="App\Controller\Admin\AdminRatingController"/>
+      <argument>App\Controller\Admin\AdminRatingController</argument>
+      <argument type="service" id="service_container"/>
+      <factory service=".service_locator.KTVqfp6" method="withContext"/>
+    </service>
     <service id=".service_locator.KTVqfp6.App\Controller\Admin\AdminThreadsController" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
       <tag name="container.service_locator_context" id="App\Controller\Admin\AdminThreadsController"/>
       <argument>App\Controller\Admin\AdminThreadsController</argument>
@@ -5174,7 +5198,7 @@
       <argument type="service" id="security.token_storage"/>
     </service>
     <service id="debug.argument_resolver.service.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\ServiceValueResolver" public="false">
-      <argument type="service" id=".service_locator.A.fayAm"/>
+      <argument type="service" id=".service_locator.8B8.euS"/>
     </service>
     <service id="debug.argument_resolver.default.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\DefaultValueResolver" public="false"/>
     <service id="debug.argument_resolver.variadic.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\VariadicValueResolver" public="false"/>
@@ -5507,7 +5531,7 @@
     <service id="Twig\Environment" alias="twig" public="false"/>
     <service id="logger" alias="monolog.logger"/>
     <service id="Psr\Log\LoggerInterface" alias="monolog.logger" public="false"/>
-    <service id="argument_resolver.controller_locator" alias=".service_locator.A.fayAm"/>
+    <service id="argument_resolver.controller_locator" alias=".service_locator.8B8.euS"/>
     <service id="twig.loader.filesystem" alias="twig.loader.native_filesystem" public="false"/>
     <service id="twig.loader" alias="twig.loader.native_filesystem"/>
     <service id="validator" alias="debug.validator" public="true"/>
