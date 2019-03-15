@@ -20,6 +20,7 @@ class Photo
     /**
      * @Assert\File(
      *      maxSize = "1M",
+     *      maxSizeMessage = "Ce fichier dépasse le 1 Mo",
      *      mimeTypes = {"image/jpeg", "image/png"},
      *      mimeTypesMessage = "Uniquement les images en format jpg ou png sont autorisées"
      * )

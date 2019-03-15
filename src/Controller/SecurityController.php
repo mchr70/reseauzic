@@ -85,7 +85,7 @@ class SecurityController extends Controller {
 
             $this->addFlash('notice', 'Mail envoyé');
 
-            // return $this->redirectToRoute('forgotten_password');
+            return $this->redirectToRoute('forgotten_password');
         }
 
         return $this->render('security/forgotten_password.html.twig');

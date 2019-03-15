@@ -27,7 +27,7 @@ class srcApp_KernelDevDebugContainerUrlGenerator extends Symfony\Component\Routi
         'admin_thread_delete' => [['id'], ['_controller' => 'App\\Controller\\Admin\\AdminThreadsController::deleteThread'], [], [['variable', '/', '[^/]++', 'id', true], ['text', '/adminthreaddelete']], [], []],
         'admin_message_delete' => [['id'], ['_controller' => 'App\\Controller\\Admin\\AdminThreadsController::deleteMessage'], [], [['variable', '/', '[^/]++', 'id', true], ['text', '/adminmessagedelete']], [], []],
         'admin_home' => [[], ['_controller' => 'App\\Controller\\Admin\\HomepageController::index'], [], [['text', '/admin/']], [], []],
-        'app_homepage_index' => [[], ['_controller' => 'App\\Controller\\HomepageController::index'], [], [['text', '/']], [], []],
+        'home' => [[], ['_controller' => 'App\\Controller\\HomepageController::index'], [], [['text', '/']], [], []],
         'member_search' => [[], ['_controller' => 'App\\Controller\\HomepageController::searchMember'], [], [['text', '/search']], [], []],
         'member_profile' => [['id'], ['_controller' => 'App\\Controller\\HomepageController::showMemberProfile'], [], [['variable', '/', '[^/]++', 'id', true], ['text', '/profile']], [], []],
         'app_member_index' => [[], ['_controller' => 'App\\Controller\\MemberController::index'], [], [['text', '/member/']], [], []],

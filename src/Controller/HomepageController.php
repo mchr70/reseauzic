@@ -19,7 +19,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 class HomepageController extends Controller {
 
     /**
-     * @Route("/")
+     * @Route("/", name="home")
      */
     public function index(ObjectManager $manager, Request $request) {
 
@@ -29,7 +29,6 @@ class HomepageController extends Controller {
                                         )
                                         ->setMaxResults(3)
                                         ->getResult();
-
 
         return $this->render('homepage/index.html.twig', ['mainNavHome'=>true, 
                                                           'title'=>'Accueil',
@@ -52,7 +51,6 @@ class HomepageController extends Controller {
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            
             foreach($search->getInstruments() as $instrument){
                 $instIds[] = $instrument->getId();
             }
@@ -71,11 +69,11 @@ class HomepageController extends Controller {
                                 ); 
                 
                 if(empty($selUsers)){
-                    $this->addFlash('danger', 'Aucun membre ne correspond à votre recherche');
+                    $this->addFlash('warning', 'Aucun membre ne correspond à votre recherche');
                 }
             }
             else{
-                $this->addFlash('danger', 'Veuillez remplir au moins un critère de recherche!');
+                $this->addFlash('warning', 'Veuillez remplir au moins un critère de recherche!');
             }
                    
         }
