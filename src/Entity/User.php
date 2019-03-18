@@ -140,6 +140,12 @@ class User implements UserInterface, \Serializable {
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     protected $resetToken;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Departement", inversedBy="users")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $departement;
     
     public function __construct() {
         $this->isActive = true;
@@ -568,6 +574,18 @@ class User implements UserInterface, \Serializable {
     public function setResetToken(?string $resetToken): void
     {
         $this->resetToken = $resetToken;
+    }
+
+    public function getDepartement(): ?Departement
+    {
+        return $this->departement;
+    }
+
+    public function setDepartement(?Departement $departement): self
+    {
+        $this->departement = $departement;
+
+        return $this;
     }
 
 }

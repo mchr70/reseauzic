@@ -5,7 +5,9 @@
 {% block body %}
     
     {% if users %}
-        <h3>Derniers inscrits</h3>
+        {% if app.user.departement %}
+            <h3>Derniers inscrits dans votre département ({{ app.user.departement.name }})</h3>
+        {% endif %}
         {% for user in users %}
             <li><a href="{{ path('member_profile', {"id":user.id}) }}">{{ user.username }}</a></li>
         {% endfor %}

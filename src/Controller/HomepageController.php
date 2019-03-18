@@ -8,9 +8,11 @@ use App\Entity\Thread;
 use App\Form\RatingType;
 use App\Entity\Instrument;
 use App\Entity\UserSearch;
+use App\Entity\Departement;
 use App\Form\ThreadFormType;
 use App\Form\UserSearchType;
 use Doctrine\ORM\EntityManager;
+use App\Repository\UserRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Routing\Annotation\Route;
@@ -23,12 +25,24 @@ class HomepageController extends Controller {
      */
     public function index(ObjectManager $manager, Request $request) {
 
-        $users = $manager->createQuery('SELECT u 
-                                        FROM App\Entity\User u 
-                                        ORDER BY u.registrationDate DESC'
-                                        )
-                                        ->setMaxResults(3)
-                                        ->getResult();
+        $users = "";
+        $em = $this->getDoctrine()->getManager();
+
+        $genresIds = array();
+   
+        if($this->getUser()){
+            foreach($this->getUser()->getGenres() as $genre){
+                $genresIds[] = $genre->getId();
+            }
+
+            $users = $em->getRepository(User::class)->findByMatchingGenres($this->getUser(), $this->getUser()->getZipCode(), $genresIds);
+
+            foreach($users as $index=>$user){
+                if($this->getUser() == $user){
+                    array_splice($users, $index, 1);
+                }
+            }
+        }
 
         return $this->render('homepage/index.html.twig', ['mainNavHome'=>true, 
                                                           'title'=>'Accueil',
@@ -39,7 +53,7 @@ class HomepageController extends Controller {
     /**
      * @Route("/search", name="member_search")
      */
-    public function searchMember(ObjectManager $manager, Request $request){
+    public function searchMember(ObjectManager $manager, Request $request, UserRepository $repo){
 
         $search = new UserSearch();
         $form = $this->createForm(UserSearchType::class, $search);
@@ -51,21 +65,24 @@ class HomepageController extends Controller {
 
         if ($form->isSubmitted() && $form->isValid()) {
 
+
             foreach($search->getInstruments() as $instrument){
                 $instIds[] = $instrument->getId();
             }
             foreach($search->getGenres() as $genre){
                 $genresIds[] = $genre->getId();
             }
-             
+
             $em = $this->getDoctrine()->getManager();
 
-            if(!empty($form["zipCode"]->getData()) OR !empty($instIds) OR !empty($genresIds)){
+            $zipCode = $form["zipCode"]->getData();
+
+            if(!empty($zipCode) OR $instIds != null OR $genresIds != null){
                $selUsers = $em->getRepository(User::class)
                                 ->findByMultiple(
-                                    $instIds, 
                                     $genresIds, 
-                                    $form["zipCode"]->getData()
+                                    $instIds, 
+                                    $zipCode
                                 ); 
                 
                 if(empty($selUsers)){

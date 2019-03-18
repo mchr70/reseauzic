@@ -466,6 +466,10 @@
     <service id="App\Form\UserType" class="App\Form\UserType" autowire="true" autoconfigure="true">
       <tag name="form.type"/>
     </service>
+    <service id="App\Repository\DepartementRepository" class="App\Repository\DepartementRepository" autowire="true" autoconfigure="true">
+      <tag name="doctrine.repository_service"/>
+      <argument type="service" id="doctrine"/>
+    </service>
     <service id="App\Repository\GenreRepository" class="App\Repository\GenreRepository" autowire="true" autoconfigure="true">
       <tag name="doctrine.repository_service"/>
       <argument type="service" id="doctrine"/>
@@ -2824,7 +2828,7 @@
       <factory class="Doctrine\ORM\EntityManager" method="create"/>
     </service>
     <service id="doctrine.orm.container_repository_factory" class="Doctrine\Bundle\DoctrineBundle\Repository\ContainerRepositoryFactory" public="false">
-      <argument type="service" id=".service_locator.GJL2lAz"/>
+      <argument type="service" id=".service_locator.Njkdak."/>
     </service>
     <service id="doctrine.orm.manager_configurator.abstract" class="Doctrine\Bundle\DoctrineBundle\ManagerConfigurator" abstract="true">
       <argument type="collection"/>
@@ -4560,6 +4564,8 @@
     <service id=".abstract.instanceof.App\Form\UserSearchType" class="App\Form\UserSearchType" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Symfony\Component\Form\FormTypeInterface.0.App\Form\UserType" class="App\Form\UserType" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Form\UserType" class="App\Form\UserType" autowire="true" autoconfigure="true" abstract="true"/>
+    <service id=".instanceof.Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepositoryInterface.0.App\Repository\DepartementRepository" class="App\Repository\DepartementRepository" autowire="true" abstract="true"/>
+    <service id=".abstract.instanceof.App\Repository\DepartementRepository" class="App\Repository\DepartementRepository" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepositoryInterface.0.App\Repository\GenreRepository" class="App\Repository\GenreRepository" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Repository\GenreRepository" class="App\Repository\GenreRepository" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepositoryInterface.0.App\Repository\InstrumentRepository" class="App\Repository\InstrumentRepository" autowire="true" abstract="true"/>
@@ -4759,6 +4765,13 @@
         <argument key="manager" type="service" id="doctrine.orm.default_entity_manager"/>
       </argument>
     </service>
+    <service id=".service_locator.zs05aVf" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
+      <tag name="container.service_locator"/>
+      <argument type="collection">
+        <argument key="manager" type="service" id="doctrine.orm.default_entity_manager"/>
+        <argument key="repo" type="service" id="App\Repository\UserRepository"/>
+      </argument>
+    </service>
     <service id=".service_locator.lm3AYgL" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
       <tag name="container.service_locator"/>
       <argument type="collection">
@@ -4785,13 +4798,13 @@
         <argument key="repo" type="service" id="App\Repository\UserRepository"/>
       </argument>
     </service>
-    <service id=".service_locator.8B8.euS" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
+    <service id=".service_locator.fZLNodA" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
       <tag name="container.service_locator"/>
       <argument type="collection">
         <argument key="App\Controller\Admin\AdminRatingController::index" type="service" id=".service_locator.jGlxRyg"/>
         <argument key="App\Controller\Admin\AdminThreadsController::showThreads" type="service" id=".service_locator.K3nSnKs"/>
         <argument key="App\Controller\HomepageController::index" type="service" id=".service_locator.Txvqv4R"/>
-        <argument key="App\Controller\HomepageController::searchMember" type="service" id=".service_locator.Txvqv4R"/>
+        <argument key="App\Controller\HomepageController::searchMember" type="service" id=".service_locator.zs05aVf"/>
         <argument key="App\Controller\RegistrationController::registerAction" type="service" id=".service_locator.lm3AYgL"/>
         <argument key="App\Controller\SecurityController::forgottenPassword" type="service" id=".service_locator.rUpeG.j"/>
         <argument key="App\Controller\SecurityController::login" type="service" id=".service_locator.EbLunuf"/>
@@ -4802,7 +4815,7 @@
         <argument key="App\Controller\Admin\AdminRatingController:index" type="service" id=".service_locator.jGlxRyg"/>
         <argument key="App\Controller\Admin\AdminThreadsController:showThreads" type="service" id=".service_locator.K3nSnKs"/>
         <argument key="App\Controller\HomepageController:index" type="service" id=".service_locator.Txvqv4R"/>
-        <argument key="App\Controller\HomepageController:searchMember" type="service" id=".service_locator.Txvqv4R"/>
+        <argument key="App\Controller\HomepageController:searchMember" type="service" id=".service_locator.zs05aVf"/>
         <argument key="App\Controller\RegistrationController:registerAction" type="service" id=".service_locator.lm3AYgL"/>
         <argument key="App\Controller\SecurityController:forgottenPassword" type="service" id=".service_locator.rUpeG.j"/>
         <argument key="App\Controller\SecurityController:login" type="service" id=".service_locator.EbLunuf"/>
@@ -4903,9 +4916,10 @@
         <argument key="doctrine.orm.default_listeners.attach_entity_listeners" type="service" id="doctrine.orm.default_listeners.attach_entity_listeners"/>
       </argument>
     </service>
-    <service id=".service_locator.GJL2lAz" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
+    <service id=".service_locator.Njkdak." class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
       <tag name="container.service_locator"/>
       <argument type="collection">
+        <argument key="App\Repository\DepartementRepository" type="service" id="App\Repository\DepartementRepository"/>
         <argument key="App\Repository\GenreRepository" type="service" id="App\Repository\GenreRepository"/>
         <argument key="App\Repository\InstrumentRepository" type="service" id="App\Repository\InstrumentRepository"/>
         <argument key="App\Repository\MessageRepository" type="service" id="App\Repository\MessageRepository"/>
@@ -5198,7 +5212,7 @@
       <argument type="service" id="security.token_storage"/>
     </service>
     <service id="debug.argument_resolver.service.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\ServiceValueResolver" public="false">
-      <argument type="service" id=".service_locator.8B8.euS"/>
+      <argument type="service" id=".service_locator.fZLNodA"/>
     </service>
     <service id="debug.argument_resolver.default.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\DefaultValueResolver" public="false"/>
     <service id="debug.argument_resolver.variadic.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\VariadicValueResolver" public="false"/>
@@ -5531,7 +5545,7 @@
     <service id="Twig\Environment" alias="twig" public="false"/>
     <service id="logger" alias="monolog.logger"/>
     <service id="Psr\Log\LoggerInterface" alias="monolog.logger" public="false"/>
-    <service id="argument_resolver.controller_locator" alias=".service_locator.8B8.euS"/>
+    <service id="argument_resolver.controller_locator" alias=".service_locator.fZLNodA"/>
     <service id="twig.loader.filesystem" alias="twig.loader.native_filesystem" public="false"/>
     <service id="twig.loader" alias="twig.loader.native_filesystem"/>
     <service id="validator" alias="debug.validator" public="true"/>

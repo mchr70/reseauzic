@@ -29,30 +29,58 @@ class UserRepository extends ServiceEntityRepository
         return $qb->getQuery()->getResult();
     }
 
+    public function findByMatchingGenres(User $user, $zipCode, $genresIds){
+
+        $qb = $this->createQueryBuilder('u');
+
+        $qb->where("u.zipCode LIKE :zipcode")
+            ->setParameter(':zipcode', substr($zipCode, 0, 2) . '%');
+        $qb->leftJoin("u.genres", "g");
+        $qb->andWhere(
+            $qb->expr()->in('g.id', ':ids')
+        );
+        $qb->setParameter('ids', $genresIds);
+
+        return $qb->getQuery()->getResult();
+    }
+
     public function findByMultiple($genres, $instrus, $zipcode) {
 
         $qb = $this->createQueryBuilder('u');
-        $qb->leftJoin("u.instruments", "i")
-            ->leftJoin("u.genres", "g");{
-            if(!empty($zipcode)){
-                $qb->where("u.zipCode LIKE :zipcode")
-                ->setParameter(':zipcode', '%'.$zipcode.'%');
-            }
-            if(!empty($instrus)){
+       
+        if(!empty($zipcode)){
+            $qb->where("u.zipCode LIKE :zipcode")
+            ->setParameter(':zipcode', $zipcode.'%');
+        }
+        if($instrus != null AND $genres != null){
+            $qb->leftJoin("u.instruments", "i");
+            $qb->leftJoin("u.genres", "g");
+            $qb->andWhere($qb->expr()->andX(
+                $qb->expr()->in('i.id', ':instrus'),
+                $qb->expr()->in('g.id', ':genres')
+            ))
+            ->setParameter(':instrus', $instrus)
+            ->setParameter(':genres', $genres);
+        }
+        else{
+            if($instrus != null){
+                $qb->leftJoin("u.instruments", "i");
                 $qb->andWhere(
                     $qb->expr()->in('i.id', ':instrus')
                 )
                 ->setParameter(':instrus', $instrus);
             }
-            if(!empty($genres)){
+            if($genres != null){
+                $qb->leftJoin("u.genres", "g");
                 $qb->andWhere(
                     $qb->expr()->in('g.id', ':genres')
                 )
                 ->setParameter(':genres', $genres);
             }
+        }
         
         return $qb->getQuery()->getResult();
-        }
+        
     }
 
 

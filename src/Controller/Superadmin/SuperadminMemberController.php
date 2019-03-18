@@ -17,6 +17,8 @@ class SuperadminMemberController extends AbstractController
      */
     public function showMembers(UserRepository $repo)
     {
+        $users = $repo->findAll();
+
         return $this->render('superadmin/members.html.twig', [
             'controller_name' => 'AdminMemberController',
             'users' => $repo->findAll(),

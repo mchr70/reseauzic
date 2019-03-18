@@ -10,6 +10,7 @@ use App\Entity\Message;
 use App\Form\MemberType;
 use App\Form\UploadType;
 use App\Form\MessageType;
+use App\Entity\Departement;
 use App\Form\ThreadFormType;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -33,6 +34,20 @@ class MemberController extends Controller {
         // 2) handle the submit (will only happen on POST)
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $userDep = $this->getDoctrine()
+                  ->getRepository(Departement::class)
+                  ->findByZipCode($user->getZipCode());
+
+            dump($userDep);
+
+            if($user->getZipCode() != null){
+                $user->setDepartement($userDep[0]);
+            }
+            else{
+                $user->setDepartement(null);
+            }
+
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);

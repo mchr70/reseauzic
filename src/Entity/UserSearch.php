@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Symfony\Component\Validator\Constraints as Assert;
+
 class UserSearch{
 
     /**
@@ -10,15 +12,11 @@ class UserSearch{
     private $zipCode;
 
     /**
-     * Undocumented variable
-     *
      * @var array
      */
     private $instruments;
 
     /**
-     * Undocumented variable
-     *
      * @var array
      */
     private $genres;
