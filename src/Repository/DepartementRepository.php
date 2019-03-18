@@ -26,7 +26,7 @@ class DepartementRepository extends ServiceEntityRepository
         $qb->where("d.code = :zipCodeBegin")
            ->setParameter(':zipCodeBegin', substr($zipCode, 0, 2));
 
-        return $qb->getQuery()->getResult();
+        return $qb->getQuery()->getSingleResult();
 
     }
 

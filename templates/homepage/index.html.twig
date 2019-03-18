@@ -5,12 +5,24 @@
 {% block body %}
     
     {% if users %}
-        {% if app.user.departement %}
-            <h3>Derniers inscrits dans votre département ({{ app.user.departement.name }})</h3>
+        {% if app.user and app.user.zipCode %}
+            {% if app.user.genres %}
+                {% for genre in app.user.genres %}
+                    <h3>Derniers inscrits dans votre département ({{ app.user.departement.name }}) en {{ genre.name }}</h3>
+                    {% for user in users %}
+                        {% for user1 in user %}
+                            {% if user1 != app.user %}
+                            <li><a href="{{ path('member_profile', {"id":user1.id}) }}">{{ user1.username }}</a></li>
+                            {% endif %}
+                        {% endfor %}
+                    {% endfor %}
+                {% endfor %}
+                
+            {% endif %}
+        {% else %}
+
         {% endif %}
-        {% for user in users %}
-            <li><a href="{{ path('member_profile', {"id":user.id}) }}">{{ user.username }}</a></li>
-        {% endfor %}
+        
     {% else %}
         Pas encore d'inscrits
     {% endif %}

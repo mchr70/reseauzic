@@ -29,6 +29,23 @@ class UserRepository extends ServiceEntityRepository
         return $qb->getQuery()->getResult();
     }
 
+    public function findByGenreAndDepartement($depId, $genreId){
+
+        $qb = $this->createQueryBuilder('u');
+
+        $qb->leftJoin("u.departement", "d");
+        $qb->where("d.id = :depId")
+            ->setParameter(':depId', $depId);
+        $qb->leftJoin("u.genres", "g");
+        $qb->andWhere(
+            $qb->expr()->in('g.id', ':genreId')
+        );
+        $qb->setParameter('genreId', $genreId);
+
+        return $qb->getQuery()->getResult();
+
+    }
+
     public function findByMatchingGenres(User $user, $zipCode, $genresIds){
 
         $qb = $this->createQueryBuilder('u');

@@ -25,7 +25,7 @@ class HomepageController extends Controller {
      */
     public function index(ObjectManager $manager, Request $request) {
 
-        $users = "";
+        $users = array(array());
         $em = $this->getDoctrine()->getManager();
 
         $genresIds = array();
@@ -35,13 +35,13 @@ class HomepageController extends Controller {
                 $genresIds[] = $genre->getId();
             }
 
-            $users = $em->getRepository(User::class)->findByMatchingGenres($this->getUser(), $this->getUser()->getZipCode(), $genresIds);
-
-            foreach($users as $index=>$user){
-                if($this->getUser() == $user){
-                    array_splice($users, $index, 1);
-                }
-            }
+            foreach($this->getUser()->getGenres() as $genre){
+                $users[] = $em->getRepository(User::class)
+                            ->findByGenreAndDepartement(
+                                $this->getUser()->getDepartement()->getId(),
+                                $genre->getId()
+                            );
+            } 
         }
 
         return $this->render('homepage/index.html.twig', ['mainNavHome'=>true, 

@@ -61,6 +61,10 @@ class User implements UserInterface, \Serializable {
     private $gender;
     /**
      * @ORM\Column(type="string", length=64, nullable=true)
+     * @Assert\Length(
+     *      min = 5,
+     *      minMessage = "Le code postal doit contenir cinq chiffres"
+     * )
      */
     private $zipCode;
     /**

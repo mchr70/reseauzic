@@ -35,14 +35,13 @@ class MemberController extends Controller {
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $userDep = $this->getDoctrine()
+            if($user->getZipCode() != null){
+
+                $userDep = $this->getDoctrine()
                   ->getRepository(Departement::class)
                   ->findByZipCode($user->getZipCode());
 
-            dump($userDep);
-
-            if($user->getZipCode() != null){
-                $user->setDepartement($userDep[0]);
+                $user->setDepartement($userDep);
             }
             else{
                 $user->setDepartement(null);
