@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Entity\PasswordUpdate;
+use App\Form\PasswordUpdateType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -97,7 +99,15 @@ class SecurityController extends Controller {
     public function resetPassword(Request $request, string $token, UserPasswordEncoderInterface $passwordEncoder)
     {
 
-        if ($request->isMethod('POST')) {
+        // 1) build the form
+        $passupdate = new PasswordUpdate();
+        $form = $this->createForm(PasswordUpdateType::class, $passupdate);
+        
+        // 2) handle the submit (will only happen on POST)
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
             $entityManager = $this->getDoctrine()->getManager();
 
             $user = $entityManager->getRepository(User::class)->findOneByResetToken($token);
@@ -108,18 +118,44 @@ class SecurityController extends Controller {
                 return $this->redirectToRoute('reset_password');
             }
 
+            $newPassword = $passupdate->getNewPassword();
+            $hash = $passwordEncoder->encodePassword($user, $newPassword);
+            $user->setPassword($hash);
+
             $user->setResetToken(null);
-            $user->setPassword($passwordEncoder->encodePassword($user, $request->request->get('password')));
+
+            $entityManager->persist($user);
             $entityManager->flush();
 
-            $this->addFlash('notice', 'Mot de passe mis à jour');
-
-            return $this->redirectToRoute('login');
         }
-        else {
 
-            return $this->render('security/reset_password.html.twig', ['token' => $token]);
-        }
+        return $this->render('security/reset_password.html.twig', ['mainNavMember'=>true, 
+                                                        'title'=>'Réinitialiser votre mot de passe',
+                                                        'form' => $form->createView()]);
+
+        // if ($request->isMethod('POST')) {
+        //     $entityManager = $this->getDoctrine()->getManager();
+
+        //     $user = $entityManager->getRepository(User::class)->findOneByResetToken($token);
+        //     /* @var $user User */
+
+        //     if ($user === null) {
+        //         $this->addFlash('danger', 'Token Inconnu');
+        //         return $this->redirectToRoute('reset_password');
+        //     }
+
+        //     $user->setResetToken(null);
+        //     $user->setPassword($passwordEncoder->encodePassword($user, $request->request->get('password')));
+        //     $entityManager->flush();
+
+        //     $this->addFlash('notice', 'Mot de passe mis à jour');
+
+        //     return $this->redirectToRoute('login');
+        // }
+        // else {
+
+        //     return $this->render('security/reset_password.html.twig', ['token' => $token]);
+        // }
 
     }
 
