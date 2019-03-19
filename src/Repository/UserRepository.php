@@ -41,6 +41,7 @@ class UserRepository extends ServiceEntityRepository
             $qb->expr()->in('g.id', ':genreId')
         );
         $qb->setParameter('genreId', $genreId);
+        $qb->setMaxResults(4);
 
         return $qb->getQuery()->getResult();
 

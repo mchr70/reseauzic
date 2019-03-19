@@ -4,21 +4,29 @@
 
 {% block body %}
     
+    {# Check if the array 'users' is not empty #}
     {% if users %}
+        {# Check if the user is connected and if he/she has defined his/her zip code #}
         {% if app.user and app.user.zipCode %}
             {% if app.user.genres %}
+                {# Looping over the connected user's genres #}
                 {% for genre in app.user.genres %}
-                    <h3>Derniers inscrits dans votre département ({{ app.user.departement.name }}) en {{ genre.name }}</h3>
-                    {% for user in users %}
-                        {% for user1 in user %}
-                            {% if user1 != app.user %}
-                            <li><a href="{{ path('member_profile', {"id":user1.id}) }}">{{ user1.username }}</a></li>
+                    {# For each user #}
+                    {% set index = loop.index %}
+                    {% for user in users[index] %}
+                        {# Hiding the connected user #}
+                        {% if app.user != user and user.isActive == 1 %}
+                            {# Check if there is at least one user per genre #}
+                            {% if users[index]|length > 0 %}
+                                <h3>Derniers inscrits dans votre département ({{ app.user.departement.name }}) en {{ genre.name }}</h3>
+                                <li><a href="{{ path('member_profile', {"id":user.id}) }}">{{ user.username }}</a></li>
                             {% endif %}
-                        {% endfor %}
+                        {% endif %}
                     {% endfor %}
                 {% endfor %}
-                
+
             {% endif %}
+
         {% else %}
 
         {% endif %}

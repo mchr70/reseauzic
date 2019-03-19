@@ -24,10 +24,10 @@ class HomepageController extends Controller {
      * @Route("/", name="home")
      */
     public function index(ObjectManager $manager, Request $request) {
-
-        $users = array(array());
+        
         $em = $this->getDoctrine()->getManager();
-
+        
+        $users = array(array());
         $genresIds = array();
    
         if($this->getUser()){
@@ -37,7 +37,7 @@ class HomepageController extends Controller {
 
             foreach($this->getUser()->getGenres() as $genre){
                 $users[] = $em->getRepository(User::class)
-                            ->findByGenreAndDepartement(
+                              ->findByGenreAndDepartement(
                                 $this->getUser()->getDepartement()->getId(),
                                 $genre->getId()
                             );
