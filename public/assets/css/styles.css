@@ -1,5 +1,5 @@
 /*base*/
-body{background: #ebeff2;}
+body{background: white;}
 .bck1{background: #fff;}
 
 /*generique*/
@@ -8,6 +8,10 @@ body{background: #ebeff2;}
 /*header*/
 header#header {margin-bottom: 20px;padding: 10px;}
 header#header h1 {text-align: center;color: #5cb85c;}
+
+h4{
+    color:white;
+}
 
 /*footer*/
 footer#footer{margin-top: 20px;padding: 10px;}
@@ -28,6 +32,6 @@ html {
     width: 100%;
     /* Set the fixed height of the footer here */
     height: 60px;
-    background-color: #f5f5f5;
+    background-color: #4E78A4;
     text-align: center;
   }
