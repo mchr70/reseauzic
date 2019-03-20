@@ -16,6 +16,7 @@ class AdminRatingController extends AbstractController
     {
 
         return $this->render('admin/ratings.html.twig', [
+            'title' => 'Gestion des évaluations',
             'controller_name' => 'AdminRatingController',
             'ratings' => $repo->findAll()
         ]);

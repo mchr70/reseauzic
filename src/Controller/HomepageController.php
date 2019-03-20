@@ -35,14 +35,19 @@ class HomepageController extends Controller {
                 $genresIds[] = $genre->getId();
             }
 
-            foreach($this->getUser()->getGenres() as $genre){
-                $users[] = $em->getRepository(User::class)
-                              ->findByGenreAndDepartement(
-                                $this->getUser()->getDepartement()->getId(),
-                                $genre->getId()
-                            );
-            } 
+            // check if the current user's departement is null
+            if($this->getUser()->getDepartement() != null){
+                foreach($this->getUser()->getGenres() as $genre){
+                    $users[] = $em->getRepository(User::class)
+                                ->findByGenreAndDepartement(
+                                    $this->getUser()->getDepartement()->getId(),
+                                    $genre->getId()
+                                );
+                } 
+            }
         }
+
+        dump($users);
 
         return $this->render('homepage/index.html.twig', ['mainNavHome'=>true, 
                                                           'title'=>'Accueil',

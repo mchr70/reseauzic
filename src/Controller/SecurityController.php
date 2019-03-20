@@ -90,7 +90,9 @@ class SecurityController extends Controller {
             return $this->redirectToRoute('forgotten_password');
         }
 
-        return $this->render('security/forgotten_password.html.twig');
+        return $this->render('security/forgotten_password.html.twig',[
+            'title' => 'Mot de passe oublié'
+        ]);
     }
 
     /**
@@ -132,30 +134,6 @@ class SecurityController extends Controller {
         return $this->render('security/reset_password.html.twig', ['mainNavMember'=>true, 
                                                         'title'=>'Réinitialiser votre mot de passe',
                                                         'form' => $form->createView()]);
-
-        // if ($request->isMethod('POST')) {
-        //     $entityManager = $this->getDoctrine()->getManager();
-
-        //     $user = $entityManager->getRepository(User::class)->findOneByResetToken($token);
-        //     /* @var $user User */
-
-        //     if ($user === null) {
-        //         $this->addFlash('danger', 'Token Inconnu');
-        //         return $this->redirectToRoute('reset_password');
-        //     }
-
-        //     $user->setResetToken(null);
-        //     $user->setPassword($passwordEncoder->encodePassword($user, $request->request->get('password')));
-        //     $entityManager->flush();
-
-        //     $this->addFlash('notice', 'Mot de passe mis à jour');
-
-        //     return $this->redirectToRoute('login');
-        // }
-        // else {
-
-        //     return $this->render('security/reset_password.html.twig', ['token' => $token]);
-        // }
 
     }
 

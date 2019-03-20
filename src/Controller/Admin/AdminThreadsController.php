@@ -16,6 +16,7 @@ class AdminThreadsController extends AbstractController
     public function showThreads(ThreadRepository $repo)
     {
         return $this->render('admin/threads.html.twig', [
+            'title' => 'Gestion de la messagerie',
             'controller_name' => 'AdminThreadsController',
             'threads' => $repo->findAll()
         ]);

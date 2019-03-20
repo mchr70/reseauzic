@@ -58,7 +58,7 @@ class MemberController extends Controller {
         }
 
         return $this->render('member/index.html.twig', ['mainNavMember'=>true, 
-                                                        'title'=>'Espace Membre',
+                                                        'title'=>'Espace d\'édition de votre fiche membre',
                                                         'form' => $form->createView()]);
     }
 
