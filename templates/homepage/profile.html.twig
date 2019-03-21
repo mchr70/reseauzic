@@ -3,20 +3,29 @@
 {% block title %}{{title}}{% endblock %}
 
 {% block body %}
+    <h4 mt-3>Profil de {{ user.username }}</h4>
     <ul class="nav nav-tabs mt-3">
-    <li class="nav-item">
-        <a class="nav-link active" data-toggle="tab" href="#infos">Infos personnelles</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" data-toggle="tab" href="#present">Présentation</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" data-toggle="tab" href="#evals">Evaluations reçues</a>
-    </li>
+        <li class="nav-item">
+            <a class="nav-link active" data-toggle="tab" href="#infos">Infos personnelles</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#present">Présentation</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#evals">Evaluations reçues</a>
+        </li>
     </ul>
     <div id="myTabContent" class="tab-content">
     <div class="tab-pane fade active show" id="infos">
         <p>
+            <a href="{{ path('member_profile', {"id":user.id}) }}">
+                {% if user.photoSrc %}
+                <img width="128px" height="128px" src="{{ asset('photos/' ~ user.photoSrc) }}" alt="{{ user.photoAlt }}" title="{{ user.username }}"  />
+                {% else %}
+                <img width="128px" height="128px" src="{{ asset('photos/0.png') }}" alt="{{ user.photoAlt }}" title="{{ user.username }}" />
+                {% endif %}                         
+            </a>
+
         {% if user.birthDate %}
         <p>Âge : {{ user.birthDate | age }} ans</p>
         {% endif %}
@@ -94,7 +103,7 @@
                 <p>{{ rating.comment }}</p>      
             {% endfor %}
              {% else %}
-                {{ user.email }} n'a pas encore réçu d'évaluation.
+                {{ user.username }} n'a pas encore réçu d'évaluation.
             {% endif %}
 
             {% if app.user and app.user.ratedUser(user) == false and app.user.id != user.id  %}
