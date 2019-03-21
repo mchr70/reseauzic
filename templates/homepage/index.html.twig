@@ -11,6 +11,9 @@
             {% if app.user.genres %}
                 {# Looping over the connected user's genres #}
                 {% for genre in app.user.genres %}
+                    <div class="card bg-light mt-3 mb-3" >
+                        <div class="card-header">Derniers inscrits dans votre département ({{ app.user.departement.name }}) en {{ genre.name }}</div>
+                        <div class="card-body">
                     {# For each user #}
                     {% set index = loop.index %}
                     {% for user in users[index] %}
@@ -18,11 +21,20 @@
                         {% if app.user != user and user.isActive == 1 %}
                             {# Check if there is at least one user per genre #}
                             {% if users[index]|length > 0 %}
-                                <h3>Derniers inscrits dans votre département ({{ app.user.departement.name }}) en {{ genre.name }}</h3>
-                                <li><a href="{{ path('member_profile', {"id":user.id}) }}">{{ user.username }}</a></li>
+                                
+                                        <a href="{{ path('member_profile', {"id":user.id}) }}">
+                                        {% if user.photoSrc %}
+                                            <img width="128px" height="128px" src="{{ asset('photos/' ~ user.photoSrc) }}" alt="{{ user.photoAlt }}" title="{{ user.username }}"  />
+                                        {% else %}
+                                            <img width="128px" height="128px" src="{{ asset('photos/0.png') }}" alt="{{ user.photoAlt }}" title="{{ user.username }}" />
+                                        {% endif %} 
+                                        </a>
+
                             {% endif %}
                         {% endif %}
                     {% endfor %}
+                        </div>
+                    </div>
                 {% endfor %}
 
             {% endif %}

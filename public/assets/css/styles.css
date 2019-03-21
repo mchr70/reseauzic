@@ -10,7 +10,7 @@ header#header {margin-bottom: 20px;padding: 10px;}
 header#header h1 {text-align: center;color: #5cb85c;}
 
 h4{
-    color:white;
+    color:black;
 }
 
 /*footer*/
@@ -32,6 +32,11 @@ html {
     width: 100%;
     /* Set the fixed height of the footer here */
     height: 60px;
-    background-color: #4E78A4;
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#6d94bf), color-stop(50%, #446E9B), to(#3e648d));
+    background-image: linear-gradient(#6d94bf, #446E9B 50%, #3e648d);
+    background-repeat: no-repeat;
+    -webkit-filter: none;
+    filter: none;
+    border: 1px solid #345578;
     text-align: center;
   }

@@ -3,7 +3,112 @@
 {% block title %}{{title}}{% endblock %}
 
 {% block body %}
- 
+    <ul class="nav nav-tabs mt-3">
+    <li class="nav-item">
+        <a class="nav-link active" data-toggle="tab" href="#infos">Infos personnelles</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" data-toggle="tab" href="#present">Présentation</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" data-toggle="tab" href="#evals">Evaluations reçues</a>
+    </li>
+    </ul>
+    <div id="myTabContent" class="tab-content">
+    <div class="tab-pane fade active show" id="infos">
+        <p>
+        {% if user.birthDate %}
+        <p>Âge : {{ user.birthDate | age }} ans</p>
+        {% endif %}
+        <p>Inscrit(e) depuis le {{ user.registrationDate | date("d/m/Y") }}</p>
+
+        {% if user.gender %}
+            {% if user.gender ==1 %}
+                <p>Homme</p>
+            {% else %}
+                <p>Femme</p>
+            {% endif %}
+        {% endif %}
+
+        {% if user.zipCode %}
+            <p>Code postal : {{ user.zipCode }}</p>
+        {% endif %}
+
+        {% if user.City %}
+            <p>Ville : {{ user.City }}</p>
+        {% endif %}
+
+        {% if user.address %}
+            <p>Adresse : {{ user.address }}</p>
+        {% endif %}
+
+        {% if user.phone %}
+            <p>Téléphone : {{ user.phone }}</p>
+        {% endif %}  
+        </p>
+    </div>
+    <div class="tab-pane fade" id="present">
+        <p>
+            {% if user.about %}
+            <p>Présentation : {{ user.about }}</p>
+            {% endif %}
+
+            {% if user.influences %}
+                <p>Influences : {{ user.influences }}</p>
+            {% endif %}
+
+            {% if user.material %}
+                <p>Matériel : {{ user.material }}</p>
+            {% endif %}
+
+            {% if user.instruments|length > 0 %}
+                <h4>Instruments pratiqués</h4>
+                {% for instrument in user.instruments %}
+                    <p>{{ instrument.name }}</p>
+                {% endfor %}
+            {% else %}
+                <p>{{ user.username }} n'a pas encore renseigné d'instruments dans son profil.</p>
+            {% endif %}
+
+            {% if user.genres|length > 0 %}
+                <h4>Genres de musique pratiqués</h4>
+                {% for genre in user.genres %}
+                    <p>{{ genre.name }}</p>
+                {% endfor %}
+            {% else %}
+                <p>{{ user.username }} n'a pas encore renseigné de genres de musique dans son profil.</p>
+            {% endif %}
+        </p>
+    </div>
+    <div class="tab-pane fade" id="evals">
+        <p>
+            {% if user.receivedRatings|length > 0 %}
+
+            <h4>Evaluations</h4>
+
+            <h4>Moyenne : {{ user.avgRatings }} (calculée sur {{ user.receivedRatings|length }} évaluations)</h4>
+                
+            {% for rating in user.receivedRatings %}
+                <p>Par {{ rating.userSender.email }}, le {{ rating.createdAt|date("d/m/Y à H:i") }}</p>
+                <p>{{ rating.note }} / 5</p>
+                <p>{{ rating.comment }}</p>      
+            {% endfor %}
+             {% else %}
+                {{ user.email }} n'a pas encore réçu d'évaluation.
+            {% endif %}
+
+            {% if app.user and app.user.ratedUser(user) == false and app.user.id != user.id  %}
+            <h4>Laisser une évaluation</h4>
+            {{ form(form) }}
+            {% endif %}
+            {% if app.user and app.user.id != user.id  %}
+            <a href="{{ path('thread_editor', {"recipientId": user.id}) }}">Commencer un fil de discussion avec {{ user.email }}</a> 
+            {% endif %} 
+        </p>
+    </div>
+    </div>
+
+{# 
     {% if user.birthDate %}
         <p>Âge : {{ user.birthDate | age }} ans</p>
     {% endif %}
@@ -81,6 +186,6 @@
     {% endif %}
     {% if app.user and app.user.id != user.id  %}
         <a href="{{ path('thread_editor', {"recipientId": user.id}) }}">Commencer un fil de discussion avec {{ user.email }}</a> 
-    {% endif %}
+    {% endif %} #}
     
 {% endblock %}

@@ -3,8 +3,18 @@
 {% block title %}{{title}}{% endblock %}
 
 {% block body %}
-    {{ form(form) }}
-    {% for user in selUsers %}
-        <p><a href="{{ path('member_profile', {"id":user.id}) }}">{{ user.email }}</a></p>
-    {% endfor %}
+    <div class="jumbotron mt-3">
+        <h1 class="display-4">Rechercher des membres</h1>
+        {{ form(form) }}
+        {% for user in selUsers %}
+        <a href="{{ path('member_profile', {"id":user.id}) }}">
+            {% if user.photoSrc %}
+            <img width="128px" height="128px" src="{{ asset('photos/' ~ user.photoSrc) }}" alt="{{ user.photoAlt }}" title="{{ user.username }}"  />
+            {% else %}
+            <img width="128px" height="128px" src="{{ asset('photos/0.png') }}" alt="{{ user.photoAlt }}" title="{{ user.username }}" />
+            {% endif %} 
+        </a>
+        {% endfor %}
+    </div>
+    
 {% endblock %}
