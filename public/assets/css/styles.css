@@ -48,3 +48,7 @@ html {
   #note {
     float: right;
   }
+
+  .container {
+    margin-bottom: 70px;
+  }
