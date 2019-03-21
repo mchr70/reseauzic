@@ -40,3 +40,11 @@ html {
     border: 1px solid #345578;
     text-align: center;
   }
+
+  .footer h4 {
+    color: rgba(255,255,255,0.75);
+  }
+
+  #note {
+    float: right;
+  }

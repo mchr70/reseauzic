@@ -98,7 +98,13 @@
             <h4>Moyenne : {{ user.avgRatings }} (calculée sur {{ user.receivedRatings|length }} évaluations)</h4>
                 
             {% for rating in user.receivedRatings %}
-                <p>Par {{ rating.userSender.email }}, le {{ rating.createdAt|date("d/m/Y à H:i") }}</p>
+            <div class="card bg-light mb-3">
+                <div class="card-header">Par {{ rating.userSender.username }}, le {{ rating.createdAt|date("d/m/Y à H:i", "Europe/paris") }} <span id="note">{{ rating.note }}/5</span></div>
+                <div class="card-body">
+                    <p class="card-text">{{ rating.comment }}</p>
+                </div>
+            </div>
+                <p>Par {{ rating.userSender.email }}, le {{ rating.createdAt|date("d/m/Y à H:i", "Europe/paris") }}</p>
                 <p>{{ rating.note }} / 5</p>
                 <p>{{ rating.comment }}</p>      
             {% endfor %}

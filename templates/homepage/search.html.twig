@@ -4,7 +4,7 @@
 
 {% block body %}
     <div class="jumbotron mt-3">
-        <h1 class="display-4">Rechercher des membres</h1>
+        <h1 class="display-4">Rechercher des musiciens</h1>
         {{ form(form) }}
         {% for user in selUsers %}
         <a href="{{ path('member_profile', {"id":user.id}) }}">
