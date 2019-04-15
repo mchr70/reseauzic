@@ -40,7 +40,19 @@
             {% endif %}
 
         {% else %}
-
+            <div class="jumbotron mt-3">
+                <p class="text-center">
+                    <img src="{{ asset('assets/img/homepageimg.jpg') }}" class="img-fluid" alt="Responsive image">
+                    <p>Réseauzic vous permet de trouver facilement des musiciens près de chez vous pour créer un groupe, ou simplement jouer ensemble!</p>
+                    <p>Inscrivez-vous gratuitement ou connectez-vous pour profiter pleinement de cet outil.</p>
+                </p>
+                <p class="text-center">
+                    <a class="btn btn-primary btn-lg" href="{{path('app_registration_register')}}" role="button">Inscription</a>
+                </p>
+                <p class="text-center">
+                    <a class="btn btn-primary btn-lg" href="{{path('login')}}" role="button">Connexion</a>
+                </p>
+            </div>
         {% endif %}
         
     {% else %}
