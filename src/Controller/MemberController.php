@@ -35,17 +35,17 @@ class MemberController extends Controller {
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
 
-            if($user->getZipCode() != null){
+            // if($user->getZipCode() != null){
 
-                $userDep = $this->getDoctrine()
-                  ->getRepository(Departement::class)
-                  ->findByZipCode($user->getZipCode());
+            //     $userDep = $this->getDoctrine()
+            //       ->getRepository(Departement::class)
+            //       ->findByZipCode($user->getZipCode());
 
-                $user->setDepartement($userDep);
-            }
-            else{
-                $user->setDepartement(null);
-            }
+            //     $user->setDepartement($userDep);
+            // }
+            // else{
+            //     $user->setDepartement(null);
+            // }
 
 
             $entityManager = $this->getDoctrine()->getManager();
