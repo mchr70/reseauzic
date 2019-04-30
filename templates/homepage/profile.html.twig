@@ -103,10 +103,7 @@
                 <div class="card-body">
                     <p class="card-text">{{ rating.comment }}</p>
                 </div>
-            </div>
-                <p>Par {{ rating.userSender.email }}, le {{ rating.createdAt|date("d/m/Y à H:i", "Europe/paris") }}</p>
-                <p>{{ rating.note }} / 5</p>
-                <p>{{ rating.comment }}</p>      
+            </div> 
             {% endfor %}
              {% else %}
                 {{ user.username }} n'a pas encore réçu d'évaluation.

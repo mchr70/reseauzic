@@ -3,9 +3,29 @@
 {% block title %}{{title}}{% endblock %}
 
 {% block body %}
-    {% for thread in app.user.threads %}
-        <p><a href="{{ path('thread', {id: thread.id}) }}">{{ thread.title }}</a>    
-            <span><a href="{{ path('thread_delete', {"id": thread.id}) }}" onclick="return confirm('Etes-vous sûr(e) de vouloir supprimer ce fil?')">supprimer</a>
-        </p>
-    {% endfor %}
+    <h1 class="display-4">Vos fils de discussion</h1>
+    <table class="table table-hover">
+      <thead>
+        <tr>
+            <th scope="col">Titre</th>
+        </tr>
+      </thead>
+      <tbody>
+      {% for thread in app.user.threads %}
+          <tr class="table-active">
+            <td><a href="{{ path('thread', {id: thread.id}) }}">{{ thread.title }}</a></td>
+          </tr>
+      {% endfor %}
+      </tbody>
+    </table>        
 {% endblock %}
+
+{# <h1 class="display-4">Vos fils de discussion</h1>
+    <div class="card bg-light mt-3 mb-3" >
+        <div class="card-header">Derniers inscrits dans votre département ({{ app.user.departement.name }}) en {{ genre.name }}</div>
+        <div class="card-body">
+            <p>   
+                <span><a href="{{ path('thread_delete', {"id": thread.id}) }}" onclick="return confirm('Etes-vous sûr(e) de vouloir supprimer ce fil?')">supprimer</a>
+            </p>
+        </div>
+    </div> #}

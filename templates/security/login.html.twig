@@ -11,17 +11,20 @@
             </ul>
         </div>
     {% endif %}
-    {{ form_start(form) }}
-        {{ form_row(form._username) }}
-        {{ form_row(form._password) }}
+    <div class="jumbotron mt-3">
+        <h1 class="display-4">Connexion</h1>
+        {{ form_start(form) }}
+            {{ form_row(form._username) }}
+            {{ form_row(form._password) }}
 
-        {# <input type="checkbox" id="remember_me" name="_remember_me" checked/>
-        <label for="remember_me">Se souvenir de moi</label> #}
+            {# <input type="checkbox" id="remember_me" name="_remember_me" checked/>
+            <label for="remember_me">Se souvenir de moi</label> #}
 
-        {{ form_row(form.ok) }}
-    {{ form_end(form) }}
-    <div>
-        <a  href="{{ path('forgotten_password') }}">Mot de passe oublié?</a>
-    </div>    
+            {{ form_row(form.ok) }}
+        {{ form_end(form) }}
+        <div>
+            <a  href="{{ path('forgotten_password') }}">Mot de passe oublié?</a>
+        </div>    
+    </div>
     
 {% endblock %}

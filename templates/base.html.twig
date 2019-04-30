@@ -38,8 +38,6 @@
                     <li class="nav-item {% if mainNavHome is defined %}active{% endif %}">
                         <a class="nav-link" href="{{path('member_search')}}">Rechercher des musiciens</a>
                     </li>
-                </ul>
-                <ul class="navbar-nav ml-auto">
                     {% if is_granted('ROLE_ADMIN') %}
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -53,7 +51,7 @@
                                 <a class="dropdown-item" href="{{ path('admin_rating') }}">Gestion des évaluations</a>
                                 
                             </div>
-                        </li>    
+                        </li> 
                     {% endif %}
                     {% if is_granted('ROLE_USER') %}
                         <li class="nav-item dropdown">
@@ -110,7 +108,7 @@
         {% block footer %}
             <footer class="footer" id="footer" class="navbar-dark">
       
-                    <h4>Footer</h4>
+                    <h4>&copy; 2019 Réseauzic</h4>
    
             </footer>
         {% endblock %}
